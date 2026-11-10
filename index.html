@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Serena Visuales · Fotografía de matrimonios en La Serena y Coquimbo</title>
+<meta name="description" content="Fotografía de matrimonios en La Serena, Coquimbo y todo el norte. Momentos reales, sin pasar la fiesta posando. Consulten su fecha por WhatsApp.">
+<meta property="og:title" content="Serena Visuales · Fotografía de matrimonios">
+<meta property="og:image" content="img/hero-playa.jpg">
+<script>(()=>{let v="sb";try{v=localStorage.getItem("site2")??"sb"}catch(e){}if(v)document.documentElement.classList.add(v==="vw"?"vx":v);if(v==="vw")document.documentElement.classList.add("vw");})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Hanken+Grotesk:wght@400;500;600&family=Montserrat:wght@300;400&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sitio de una columna que baja como una sesión real: llegada → cómo es → precios → agenda → dudas. Bandas a todo el ancho, contenido a 1080px. */
+:root{
+  --bg:#f3f1ec;        /* niebla costera (camanchaca), levemente cálida */
+  --bg-2:#e7e6df;
+  --ink:#1d2725;       /* pino oscuro */
+  --ink-2:#4d5a57;
+  --line:#cfd2cb;
+  --sea:#2c625e;       /* mar de La Herradura */
+  --sea-ink:#f3f1ec;
+  --dune:#b9925f;      /* dunas / ocre del valle */
+  --warn-bg:#fff1c9;
+  --warn-ink:#5a4100;
+  --ph-a:#c9bfae; --ph-b:#9fb0aa; --ph-c:#7d8f8d;
+  --logo-filter:none;
+  --display:"Bodoni Moda", "Didot", "Times New Roman", serif;
+  --body:"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+/* Propuestas de fondo (solo modo claro; el modo oscuro va después y manda) */
+html:root[data-palette="blanco"]{--bg:#ffffff;--bg-2:#f3f3f1;--ink:#151515;--ink-2:#5a5a58;--line:#dcdcd8;--sea:#1f1f1f;--sea-ink:#ffffff;--dune:#a8865a;--ph-a:#d9d6d0;--ph-b:#b9b5ae;--ph-c:#8e8a84}
+html:root[data-palette="rosa"]{--bg:#f7efeb;--bg-2:#efdfd8;--ink:#2a1f1d;--ink-2:#6b5853;--line:#e1cec6;--sea:#7d4f45;--sea-ink:#fbf4f1;--dune:#b98a6a;--ph-a:#e3c9bf;--ph-b:#c9a99f;--ph-c:#9e7d74}
+html:root[data-palette="salvia"]{--bg:#eff1eb;--bg-2:#e0e5da;--ink:#1f2a1f;--ink-2:#55614f;--line:#cdd4c5;--sea:#4d6a47;--sea-ink:#f4f6f1;--dune:#a68a5c;--ph-a:#cfd6c4;--ph-b:#a9b59d;--ph-c:#7e8c74}
+html:root[data-palette="noche"]{--bg:#efe9e1;--bg-2:#1f2a33;--ink:#1c232a;--ink-2:#58606a;--line:#d6cfc5;--sea:#1f2a33;--sea-ink:#f3eee7;--dune:#c19a6b;--ph-a:#d2c7b8;--ph-b:#a9a196;--ph-c:#6f6c69}
+html:root[data-palette="noche"] .how,html:root[data-palette="noche"] .packs,html:root[data-palette="noche"] .terms{--bg:#1f2a33;--ink:#f3eee7;--ink-2:#b9c0c7;--line:#3a4752;--sea:#c19a6b;--sea-ink:#1f2a33;color:var(--ink)}
+html:root[data-palette="noche"] .packs .pack{--bg:#f3eee7;--ink:#1c232a;--ink-2:#58606a;--line:#d6cfc5;--sea:#1f2a33;--sea-ink:#f3eee7}
+html:root[data-palette="blanco"],html:root[data-palette="rosa"],html:root[data-palette="salvia"],html:root[data-palette="noche"]{--logo-filter:none;color-scheme:light}
+
+/* Selector de fondo del prototipo */
+.picker{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:10px 12px;box-shadow:0 6px 24px rgba(0,0,0,.18);display:flex;flex-direction:column;gap:10px;width:min(340px,calc(100vw - 24px))}
+.picker .bar{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.picker p{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.picker p b{color:var(--ink);font-weight:500}
+.picker .tog{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:.3em .8em;font:500 .75rem var(--body);cursor:pointer}
+.picker .opts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.picker .sw{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:transparent;color:var(--ink-2);font:500 .62rem var(--body);cursor:pointer;padding:2px;line-height:1.2;text-align:center}
+.picker .sw i{width:34px;height:34px;border-radius:50%;display:block;border:1px solid rgba(0,0,0,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.picker .sw[aria-pressed="true"]{color:var(--ink)}
+.picker .sw[aria-pressed="true"] i{outline:2px solid var(--ink);outline-offset:2px}
+.picker .nav{display:flex;gap:8px}
+.picker .nav button{flex:1;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:.45em;font:500 .78rem var(--body);cursor:pointer}
+
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141b1a; --bg-2:#1b2422; --ink:#e9e7e0; --ink-2:#a9b3b0; --line:#2f3b39;
+  --sea:#6fb1aa; --sea-ink:#0e1514; --dune:#d6b383; --warn-bg:#3a3010; --warn-ink:#f5dc8e;
+  --ph-a:#4a4438; --ph-b:#33433f; --ph-c:#273331; --logo-filter:invert(1); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141b1a; --bg-2:#1b2422; --ink:#e9e7e0; --ink-2:#a9b3b0; --line:#2f3b39;
+  --sea:#6fb1aa; --sea-ink:#0e1514; --dune:#d6b383; --warn-bg:#3a3010; --warn-ink:#f5dc8e;
+  --ph-a:#4a4438; --ph-b:#33433f; --ph-c:#273331; --logo-filter:invert(1); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{padding-block:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.08}
+h1{font-size:clamp(2.1rem,4.6vw,3.4rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+h3{font-size:1.25rem}
+p{margin:0}
+
+.lead{font-size:1.04rem;color:var(--ink-2);max-width:58ch}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,var(--dune) 60%,var(--ink))}
+em{font-style:italic}
+a{color:inherit}
+.btn{display:inline-flex;align-items:center;gap:.5em;font:600 .92rem var(--body);padding:.75em 1.3em;border-radius:999px;border:1px solid var(--sea);background:var(--sea);color:var(--sea-ink);cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--dune);outline-offset:3px}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.prov{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;background:var(--warn-bg);color:var(--warn-ink);padding:.2em .55em;border-radius:4px;white-space:nowrap;vertical-align:middle}
+
+/* Barra de prototipo */
+.protobar{background:var(--warn-bg);color:var(--warn-ink);font-size:.88rem;line-height:1.45}
+.protobar .wrap{padding-block:10px;display:flex;gap:12px;flex-wrap:wrap;align-items:baseline}
+.protobar strong{font-family:var(--mono);font-weight:500;letter-spacing:.06em;text-transform:uppercase;font-size:.75rem}
+
+/* Encabezado */
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:20px;gap:16px;flex-wrap:wrap}
+.brand{display:block;line-height:0}
+.brand img{height:34px;width:auto;filter:var(--logo-filter)}
+.wm-name{font-family:"Montserrat","Helvetica Neue",Arial,sans-serif;font-weight:400;font-size:1.02rem;letter-spacing:.2em;text-transform:uppercase;line-height:1}
+.wm-sub{display:flex;align-items:center;gap:10px;font-family:"Montserrat","Helvetica Neue",Arial,sans-serif;font-weight:300;font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:var(--ink-2);line-height:1}
+.wm-sub::before,.wm-sub::after{content:"";flex:1;height:1px;background:currentColor;opacity:.7}
+.foot-logo{height:34px;width:auto;filter:var(--logo-filter)}
+@media (max-width:520px){.wm-name{font-size:.86rem;letter-spacing:.14em}}
+nav.menu{display:flex;gap:22px;flex-wrap:wrap;font-size:.95rem}
+nav.menu a{text-decoration:none;color:var(--ink-2)}
+nav.menu a:hover{color:var(--ink)}
+
+/* Marcadores de imagen IA */
+.ph{position:relative;border-radius:2px;overflow:hidden;max-width:100%;
+  background:
+    radial-gradient(120% 70% at 70% 100%, var(--ph-c) 0%, transparent 60%),
+    linear-gradient(180deg,var(--ph-a) 0%,var(--ph-b) 62%,var(--ph-c) 100%);
+  display:flex;align-items:flex-end}
+.ph::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(255,255,255,.06) 14px 15px)}
+.ph .tag{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;background:var(--warn-bg);color:var(--warn-ink);padding:.3em .6em;border-radius:3px}
+.ph .cap{position:relative;margin:10px;background:color-mix(in srgb,var(--bg) 88%,transparent);color:var(--ink);font-size:.78rem;line-height:1.4;padding:.6em .75em;border-radius:3px;max-width:34ch}
+.ph .cap b{font-weight:600}
+
+/* Hero */
+.hero{text-align:center}
+.hero .grid{display:block}
+.hero .copy{display:flex;flex-direction:column;align-items:center;gap:18px;min-width:0;max-width:720px;margin:0 auto}
+.hero .lead{margin:0 auto}
+.hero-logo{width:min(420px,80%);height:auto;filter:var(--logo-filter)}
+.hero h1{font-size:clamp(1.5rem,3vw,2.1rem);font-style:normal}
+.eyebrow.rule{display:flex;align-items:center;gap:14px}
+.eyebrow.rule::before,.eyebrow.rule::after{content:"";width:32px;height:1px;background:currentColor;opacity:.6}
+.ph.real{margin:0;display:block}
+.ph.real::before{display:none}
+.ph.real img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;display:block}
+.heroimg{margin:0;position:relative;aspect-ratio:3/4;max-height:540px;justify-self:end;width:100%;max-width:100%;overflow:hidden;border-radius:2px;background:var(--bg-2)}
+.heroimg img{width:100%;height:100%;object-fit:cover;display:block}
+.heroimg .tag{position:absolute;top:10px;left:10px;right:10px;width:max-content;max-width:calc(100% - 20px);font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;background:var(--warn-bg);color:var(--warn-ink);padding:.3em .6em;border-radius:3px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.facts{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;font-size:.92rem;color:var(--ink-2);border-top:1px solid var(--line);padding-top:18px}
+.facts b{display:block;font-family:var(--display);font-size:1.2rem;font-weight:400;color:var(--ink)}
+
+/* Cómo es */
+.how{background:var(--bg-2)}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin:0 auto 32px;max-width:640px}
+.close .head{align-items:flex-start;text-align:left}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--ink);padding-top:16px;min-width:0}
+.steps li::before{counter-increment:s;content:"Paso " counter(s);font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:color-mix(in srgb,var(--dune) 72%,var(--ink))}
+.steps h3{font-size:1.1rem}
+.steps p{color:var(--ink-2);font-size:.97rem}
+
+/* Diferencias */
+.why .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.why .item{display:flex;flex-direction:column;gap:10px;min-width:0}
+.why .item h3{font-size:1.2rem}
+.why .item p{color:var(--ink-2)}
+
+/* Galería */
+.gallery .grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:110px;gap:12px}
+.g1{grid-column:span 3;grid-row:span 3}.g2{grid-column:span 3;grid-row:span 2}.g3{grid-column:span 2;grid-row:span 2}.g4{grid-column:span 1;grid-row:span 2}
+.g5{grid-column:span 2;grid-row:span 2}.g6{grid-column:span 4;grid-row:span 2}
+
+/* Video */
+.video .ph{aspect-ratio:21/9;align-items:center;justify-content:center}
+.play{position:relative;width:60px;height:60px;border-radius:50%;background:var(--bg);display:grid;place-items:center}
+.play::after{content:"";border-left:22px solid var(--ink);border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:6px}
+.video .ph .cap{position:absolute;bottom:0;left:0}
+
+/* Packs */
+.packs{background:var(--bg-2)}
+.packgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.pack .note{font-size:.82rem;color:var(--ink-2)}
+.pack{background:var(--bg);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.pack.feat{border-color:var(--sea);box-shadow:0 0 0 1px var(--sea)}
+.pack .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.badge{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;background:var(--sea);color:var(--sea-ink);padding:.3em .7em;border-radius:999px}
+.price{font-family:var(--display);font-size:2.2rem;line-height:1;font-variant-numeric:tabular-nums}
+.cuotas{color:var(--ink-2);font-size:.95rem}
+.pack ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;flex:1}
+.pack li{padding-left:22px;position:relative}
+.pack li::before{content:"";position:absolute;left:2px;top:.62em;width:9px;height:9px;border-radius:50%;border:1.5px solid var(--dune)}
+.pack .btn{align-self:flex-start}
+.extras{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;font-size:.93rem}
+.extras div{border-top:1px solid var(--line);padding-top:10px;min-width:0}
+.extras b{display:block;font-variant-numeric:tabular-nums}
+.extras span{color:var(--ink-2)}
+
+/* Agenda: panel tipo "concierge". Calendario y horarios a la izquierda; datos y ticket de reserva oscuro (mismo tono que la portada) a la derecha. */
+.book{background:var(--bg-2)}
+.book .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:0;align-items:stretch;background:var(--bg);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -40px rgba(20,27,26,.45),0 2px 6px rgba(20,27,26,.05)}
+.cal{padding:30px 30px 26px;min-width:0;border-right:1px solid var(--line)}
+.bsteps{list-style:none;margin:0 0 26px;padding:0;display:flex;gap:6px;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.bsteps li{flex:1;display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px solid var(--line);transition:border-color .4s,color .4s}
+.bsteps b{font-family:var(--display);font-weight:400;font-size:1.25rem;letter-spacing:0;color:var(--ink-2);font-style:italic;transition:color .4s}
+.bsteps li.on{border-top:2px solid var(--dune);color:var(--ink)}
+.bsteps li.on b{color:var(--dune)}
+.bsteps li.done{border-top:2px solid var(--sea);color:var(--ink)}
+.bsteps li.done b{color:var(--sea)}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cal-head h3{font-size:1.7rem;letter-spacing:-.01em}
+.cal-head h3 em{text-transform:capitalize}
+.cal-head h3 span{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;color:var(--ink-2);vertical-align:middle;margin-left:6px}
+.cal-head button{background:none;border:1px solid var(--line);color:var(--ink);width:40px;height:40px;border-radius:50%;cursor:pointer;font:400 1.2rem var(--display);transition:background .2s,border-color .2s}
+.cal-head button:not([disabled]):hover{border-color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.cal-head button[disabled]{opacity:.25;cursor:default}
+.dow,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.dow span{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.days button{aspect-ratio:1;border:0;background:transparent;color:var(--ink);font:400 1.05rem var(--display);border-radius:50%;cursor:pointer;font-variant-numeric:lining-nums tabular-nums;position:relative;transition:background .2s,color .2s,transform .2s}
+.days button.free::after{content:"";position:absolute;left:50%;bottom:14%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--dune)}
+.days button.free:hover{background:color-mix(in srgb,var(--dune) 16%,transparent)}
+.days button.full{color:var(--ink-2);text-decoration:line-through;text-decoration-thickness:1px;cursor:not-allowed;opacity:.45}
+.days button.off{color:var(--ink-2);opacity:.3;cursor:default}
+.days button.sel{background:var(--ink);color:var(--bg);box-shadow:0 0 0 4px var(--bg),0 0 0 5px var(--dune)}
+.days button.sel::after{background:var(--bg)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.78rem;color:var(--ink-2);margin-top:16px}
+.legend i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:8px;vertical-align:middle}
+#slotWrap{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+#slotLabel{text-transform:none;letter-spacing:.06em}
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.slots button{border:1px solid var(--line);background:transparent;color:var(--ink);padding:14px 14px 12px;border-radius:14px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:2px;transition:border-color .2s,background .2s,transform .2s}
+.slots button:hover{border-color:var(--ink);transform:translateY(-1px)}
+.slots button b{font:400 1.6rem/1 var(--display);font-variant-numeric:lining-nums}
+.slots button em{font:italic .85rem var(--display);color:var(--dune)}
+.slots button small{color:var(--ink-2);font-size:.72rem}
+.slots button.sel{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.slots button.sel small{color:color-mix(in srgb,var(--bg) 70%,transparent)}
+.form{display:flex;flex-direction:column;gap:20px;min-width:0;padding:30px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field>label{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:400}
+.field small{color:var(--ink-2);font-size:.75rem;line-height:1.45}
+.field input,.field select{font:400 1.02rem var(--body);padding:.45em 0 .55em;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);border-radius:0;width:100%;transition:border-color .2s}
+.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 10px) 55%,calc(100% - 5px) 55%;background-size:5px 5px;background-repeat:no-repeat;padding-right:24px;cursor:pointer}
+.field input:focus,.field select:focus{outline:none;border-bottom-color:var(--dune)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.choice{display:flex;gap:8px;flex-wrap:wrap}
+.choice label{border:1px solid var(--line);padding:.5em 1em;border-radius:999px;cursor:pointer;font-weight:500;font-size:.86rem;transition:border-color .2s,background .2s,color .2s}
+.choice label:hover{border-color:var(--ink)}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice label:has(input:checked){border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.choice.packs3{display:grid;grid-template-columns:repeat(3,1fr)}
+.choice.packs3 label{border-radius:14px;padding:12px 12px 10px}
+.choice.packs3 span{display:flex;flex-direction:column;gap:2px}
+.choice.packs3 b{font:400 1.1rem var(--display)}
+.choice.packs3 i{font-style:normal;font-size:.8rem;opacity:.75;font-variant-numeric:tabular-nums}
+/* Ticket de reserva: fijo oscuro como la portada */
+.summary{--bg:#141b1a;--ink:#e9e7e0;--ink-2:#a9b3b0;--line:#33403d;background:var(--bg);color:var(--ink);border-radius:18px;padding:22px 22px 18px;display:flex;flex-direction:column;gap:8px;font-variant-numeric:tabular-nums;position:relative;margin-top:4px}
+.summary .tk{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.summary .tk span{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#d6b383}
+.summary .tk b{font:italic 400 1.3rem var(--display)}
+.summary .line{display:flex;justify-content:space-between;gap:12px;font-size:.9rem}
+.summary .line span:first-child{color:var(--ink-2)}
+.summary .total{border-top:1px dashed var(--line);margin-top:8px;padding-top:14px;align-items:baseline}
+.summary .total span:first-child{color:var(--ink);font-weight:500}
+.summary .total span:last-child{font:400 1.9rem/1 var(--display);color:#d6b383}
+#payBtn{width:100%;justify-content:center;padding:1em 1.3em;font-size:.95rem;letter-spacing:.02em}
+#payBtn[disabled]{opacity:.45;cursor:not-allowed}
+.secure{display:flex;justify-content:center;gap:8px;font-size:.74rem;color:var(--ink-2);margin-top:-8px}
+@media (max-width:760px){.cal{border-right:0;border-bottom:1px solid var(--line);padding:22px 18px}.form{padding:22px 18px}.choice.packs3 label{padding:10px 8px 8px}.choice.packs3 b{font-size:.98rem}.duo{grid-template-columns:1fr}}
+.notice{background:var(--warn-bg);color:var(--warn-ink);padding:14px 16px;border-radius:6px;font-size:.9rem;line-height:1.5}
+
+
+/* Tonos del modo Minimal. html.vw = "Minimal cálida": negro tostado y acento arena-durazno. */
+:root{--vx-bg:#0a0a0a;--vx-blk:#000;--vx-ink:#ededed;--vx-mute:#a1a1a1;--vx-line:#2e2e2e;--vx-l2:#1f1f1f;--vx-l3:#3e3e3e;--vx-l4:#5e5e5e;--vx-r1:#111;--vx-r2:#1a1a1a;--vx-acc:#45dec4;--vx-glow:rgba(255,255,255,.07);--vx-shadow:rgba(0,0,0,.8)}
+html.vw{--vx-bg:#15110e;--vx-blk:#0e0b09;--vx-ink:#f3ece3;--vx-mute:#b5a999;--vx-line:#382f28;--vx-l2:#2a231d;--vx-l3:#4a4037;--vx-l4:#6e6155;--vx-r1:#1c1713;--vx-r2:#241e19;--vx-acc:#e3a77f;--vx-glow:rgba(255,190,140,.09);--vx-shadow:rgba(0,0,0,.7)}
+/* Agenda variante "Minimal" (inspirada en Vercel): negro puro, Geist, bordes de 1px, cero adornos. Se activa con .vx en la sección. */
+.styletog{display:inline-flex;margin-top:14px;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.styletog button{border:0;background:transparent;color:var(--ink-2);font:500 .75rem var(--body);padding:.35em .9em;border-radius:999px;cursor:pointer}
+.styletog button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.book.vx{--bg:var(--vx-bg);--bg-2:var(--vx-blk);--ink:var(--vx-ink);--ink-2:var(--vx-mute);--line:var(--vx-line);--dune:var(--vx-ink);--sea:var(--vx-ink);--sea-ink:var(--vx-bg);--body:"Geist","Helvetica Neue",Arial,sans-serif;--display:"Geist","Helvetica Neue",Arial,sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  background:var(--vx-blk) radial-gradient(ellipse 60% 40% at 50% 0%,var(--vx-glow),transparent 70%);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+.book.vx h2{font-weight:600;letter-spacing:-.045em;font-size:clamp(1.8rem,3.4vw,2.6rem)}
+.book.vx .head .lead{color:var(--ink-2)}
+.book.vx .eyebrow{color:var(--ink-2);letter-spacing:.06em}
+.book.vx .grid{background:var(--vx-bg);border-color:var(--vx-line);border-radius:12px;box-shadow:0 0 0 1px rgba(255,255,255,.02),0 30px 80px -30px var(--vx-shadow)}
+.book.vx .cal{border-color:var(--vx-line)}
+.book.vx .bsteps{font-size:.7rem;letter-spacing:.02em;text-transform:none}
+.book.vx .bsteps li{border-top-width:1px}
+.book.vx .bsteps b{font:500 .7rem var(--mono);font-style:normal;letter-spacing:.04em}
+.book.vx .bsteps li.on,.book.vx .bsteps li.done{border-top:1px solid var(--vx-ink)}
+.book.vx .bsteps li.done{color:var(--ink-2)}
+.book.vx .bsteps li.on b,.book.vx .bsteps li.done b{color:var(--vx-ink)}
+.book.vx .cal-head h3{font-weight:600;font-size:1.15rem;letter-spacing:-.03em}
+.book.vx .cal-head h3 em{font-style:normal}
+.book.vx .cal-head h3 span{font-size:.75rem;letter-spacing:0;margin-left:8px}
+.book.vx .cal-head button{border-radius:6px;width:32px;height:32px;font:400 1rem var(--body);border-color:var(--vx-line)}
+.book.vx .dow span{font-size:.68rem;letter-spacing:.02em;text-transform:none;border-bottom:0}
+.book.vx .days{gap:4px}
+.book.vx .days button{font:500 .9rem var(--body);border-radius:6px;aspect-ratio:1.15}
+.book.vx .days button.free{background:var(--vx-r1);box-shadow:inset 0 0 0 1px var(--vx-l2)}
+.book.vx .days button.free::after{background:var(--vx-acc);width:3px;height:3px;margin-left:-1.5px;bottom:12%}
+.book.vx .days button.free:hover{background:var(--vx-r2);box-shadow:inset 0 0 0 1px var(--vx-l3)}
+.book.vx .days button.full{opacity:.3}
+.book.vx .days button.off{opacity:.18}
+.book.vx .days button.sel{background:var(--vx-ink);color:var(--vx-bg);box-shadow:none}
+.book.vx .days button.sel::after{background:var(--vx-bg)}
+.book.vx .legend i[style*="dune"]{background:var(--vx-acc)!important}
+.book.vx #slotWrap{border-color:var(--vx-line)}
+.book.vx #slotLabel{font-size:.72rem;letter-spacing:0}
+.book.vx .slots button{border-radius:8px;border-color:var(--vx-line);background:var(--vx-bg);padding:12px}
+.book.vx .slots button:hover{border-color:var(--vx-l4);transform:none;background:var(--vx-r1)}
+.book.vx .slots button b{font:600 1.15rem/1.1 var(--body);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.book.vx .slots button em{font:400 .72rem var(--mono);font-style:normal;color:var(--ink-2);margin-top:4px}
+.book.vx .slots button.sel{background:var(--vx-ink);color:var(--vx-bg);border-color:var(--vx-ink)}
+.book.vx .slots button.sel em,.book.vx .slots button.sel small{color:var(--vx-l4)}
+.book.vx .field>label{font:500 .8rem var(--body);letter-spacing:0;text-transform:none;color:var(--ink-2)}
+.book.vx .field input,.book.vx .field select{border:1px solid var(--vx-line);border-radius:6px;padding:.6em .75em;font-size:.92rem;background-color:var(--vx-bg)}
+.book.vx .field select{padding-right:28px;background-position:calc(100% - 14px) 55%,calc(100% - 9px) 55%}
+.book.vx .field input:focus,.book.vx .field select:focus{border-color:var(--vx-ink);box-shadow:0 0 0 3px var(--vx-glow)}
+.book.vx .choice label{border-radius:6px;border-color:var(--vx-line);font-size:.82rem}
+.book.vx .choice label:hover{border-color:var(--vx-l4)}
+.book.vx .choice label:has(input:checked){background:var(--vx-ink);color:var(--vx-bg);border-color:var(--vx-ink)}
+.book.vx .choice.packs3 label{border-radius:8px}
+.book.vx .choice.packs3 b{font:600 .92rem var(--body);letter-spacing:-.02em}
+.book.vx .choice.packs3 i{font-family:var(--mono);font-size:.72rem}
+.book.vx .summary{--bg:var(--vx-blk);--line:var(--vx-line);--ink-2:var(--vx-mute);border:1px solid var(--vx-line);border-radius:10px;background:var(--vx-blk)}
+.book.vx .summary .tk span{font-family:var(--mono);letter-spacing:.04em;text-transform:none;color:var(--vx-mute);font-size:.72rem}
+.book.vx .summary .tk b{font:600 .85rem var(--body);font-style:normal;letter-spacing:-.02em}
+.book.vx .summary .line{font-size:.85rem}
+.book.vx .summary .line span:last-child{font-family:var(--mono);font-size:.8rem}
+.book.vx .summary .total span:last-child{font:600 1.6rem/1 var(--body);letter-spacing:-.05em;color:var(--vx-ink)}
+.book.vx #payBtn{background:var(--vx-ink);color:var(--vx-bg);border-color:var(--vx-ink);border-radius:999px;font:500 .9rem var(--body)}
+.book.vx #payBtn:not([disabled]):hover{background:var(--vx-ink)}
+.book.vx .secure{font-family:var(--mono);font-size:.68rem}
+.book.vx .notice{background:var(--vx-r1);color:var(--vx-ink);border:1px solid var(--vx-line)}
+.book.vx .field small{font-size:.72rem}
+.book.vx .styletog{border-color:var(--vx-line)}
+
+/* Estilo de todo el sitio "Minimal" (inspirado en Vercel). Se activa con html.vx desde el selector. Los !important ganan a las variables que el selector de paletas pone en línea. */
+html.vx,html.vx :is(header.top,.hero,section,.pack,.summary,.modal-card,.picker){--bg:var(--vx-bg)!important;--bg-2:var(--vx-blk)!important;--ink:var(--vx-ink)!important;--ink-2:var(--vx-mute)!important;--line:var(--vx-line)!important;--sea:var(--vx-ink)!important;--sea-ink:var(--vx-bg)!important;--dune:var(--vx-acc)!important;--ph-a:var(--vx-r2)!important;--ph-b:var(--vx-r2)!important;--ph-c:var(--vx-r1)!important;--warn-bg:#1f1a0a!important;--warn-ink:#f5dc8e!important;--logo-filter:invert(1)!important;--body:"Geist","Helvetica Neue",Arial,sans-serif;--display:"Geist","Helvetica Neue",Arial,sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace;color-scheme:dark}
+html.vx body{background:var(--vx-blk);-webkit-font-smoothing:antialiased;font-family:var(--body)}
+html.vx header.top.scrolled{background:color-mix(in srgb,var(--vx-blk) 88%,transparent);box-shadow:0 1px 0 var(--vx-line)}
+html.vx .hero{background:var(--vx-blk) radial-gradient(ellipse 70% 50% at 50% 0%,var(--vx-glow),transparent 70%)}
+html.vx section{background:transparent}
+html.vx section+section{border-top:1px solid var(--vx-l2)}
+html.vx h1,html.vx h2,html.vx h3{font-weight:600;letter-spacing:-.045em}
+html.vx h3{letter-spacing:-.03em}
+html.vx em{font-style:normal;color:var(--ink-2)}
+html.vx .eyebrow{color:var(--ink-2);letter-spacing:.06em}
+html.vx .btn{font-weight:500;font-family:var(--body)}
+html.vx .btn.ghost{background:transparent;color:var(--ink);border-color:var(--vx-line)}
+html.vx .price,html.vx .facts b,html.vx .termgrid b,html.vx .slot b{font-weight:600;letter-spacing:-.04em}
+html.vx .pack{border-radius:12px;border-color:var(--vx-line)}
+html.vx .pack.top{background:var(--vx-ink);color:var(--vx-bg);box-shadow:0 0 0 1px var(--vx-ink),0 30px 80px -30px var(--vx-glow)}
+html.vx .pack.top .badge{background:var(--vx-bg);color:var(--vx-ink)}
+html.vx .pack.top .btn{background:var(--vx-bg);border-color:var(--vx-bg);color:var(--vx-ink)}
+html.vx .pack.top li::before{border-color:var(--vx-bg)}
+html.vx .tq blockquote,html.vx .about .sign{font-style:normal;font-weight:500;letter-spacing:-.03em}
+html.vx .anti s{font-weight:500;letter-spacing:-.02em}
+html.vx #agenda .styletog{display:none}
+html.vx .pack.mid,html.vx .pack.low{background:var(--vx-bg)!important;color:var(--vx-ink)}
+.summary .total span.tbd{font-size:1.15rem!important;letter-spacing:-.01em}
+.datecard{border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;margin-top:12px}
+.datecard b{font:400 1.3rem var(--display)}
+.datecard small{color:var(--ink-2);font-size:.8rem}
+/* Testimonios */
+.test .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.slot{border:1.5px dashed var(--line);padding:20px;min-height:130px;display:flex;flex-direction:column;gap:10px;justify-content:center;color:var(--ink-2);font-size:.93rem;min-width:0}
+.slot b{color:var(--ink);font-family:var(--display);font-weight:400;font-size:1.1rem}
+
+/* Condiciones y FAQ */
+.terms{background:var(--bg-2)}
+.termgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px}
+.termgrid div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.termgrid b{font-family:var(--display);font-weight:400;font-size:1.1rem}
+.termgrid p{color:var(--ink-2);font-size:.93rem}
+.faq{max-width:780px}
+.faq details{border-top:1px solid var(--line);padding-block:4px}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding-block:12px;font-size:1rem;font-weight:500;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--display);font-size:1.5rem;line-height:1;color:var(--sea)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding-bottom:18px;color:var(--ink-2);max-width:65ch}
+
+/* Cierre */
+.close{text-align:left}
+.close .grid{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.wa{font-family:var(--mono);font-size:.95rem;color:var(--ink-2)}
+footer{border-top:1px solid var(--line)}
+footer .wrap{padding-block:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--ink-2)}
+
+/* Notas internas */
+.notes{background:var(--ink);color:var(--bg)}
+.notes .wrap{padding-block:56px}
+.notes h2{font-size:1.6rem;margin-bottom:8px}
+.notes .cols{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:28px}
+.notes h3{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;color:var(--dune)}
+.notes ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;font-size:.93rem;line-height:1.5}
+.notes .cols>div{min-width:0}
+
+@media (max-width:860px){
+  section{padding-block:44px}
+  .hero .grid,.book .grid,.packgrid,.close .grid,.notes .cols{grid-template-columns:1fr}
+  .steps,.termgrid,.extras{grid-template-columns:1fr 1fr}
+  .why .grid,.test .grid{grid-template-columns:1fr}
+  .gallery .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}
+  .g1,.g2,.g3,.g4,.g5,.g6{grid-column:span 1;grid-row:span 2}
+  .g1{grid-column:span 2}
+}
+@media (max-width:520px){
+  .steps,.termgrid,.extras{grid-template-columns:1fr}
+  .pack{padding:24px}
+  .price{font-size:2.5rem}
+  nav.menu{gap:14px;font-size:.88rem}
+}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .btn,.days button,.slots button{transition:background .15s,box-shadow .15s,transform .15s}
+  .btn:hover{transform:translateY(-1px)}
+}
+
+.choice label{position:relative}
+html,body{overflow-x:clip}
+/* v0.3 · portada simple, jerarquía de packs y animación */
+.hero{position:relative;overflow:hidden;padding-block:48px 96px}
+.hero .wrap{position:relative;z-index:1}
+.hero .mini{font-size:.85rem;color:var(--ink-2)}
+.glow{position:absolute;inset:-20% -10%;pointer-events:none;z-index:0;
+  background:radial-gradient(38% 46% at 30% 40%, color-mix(in srgb,var(--dune) 30%,transparent), transparent 70%),
+             radial-gradient(34% 40% at 72% 62%, color-mix(in srgb,var(--sea) 18%,transparent), transparent 70%)}
+.waves{position:absolute;left:0;bottom:14px;width:200%;height:46px;z-index:0;opacity:.5}
+.waves path{fill:none;stroke:var(--ink-2);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.waves path+path{opacity:.5}
+
+.packgrid{grid-template-columns:1fr 1.2fr 1fr;align-items:center;gap:18px}
+@media (max-width:860px){.packgrid{grid-template-columns:1fr;align-items:stretch;max-width:480px;margin-inline:auto}}
+.pack{transition:transform .25s ease, box-shadow .25s ease}
+.pack.mid{background:color-mix(in srgb,var(--dune) 13%,var(--bg));border-color:color-mix(in srgb,var(--dune) 35%,var(--line))}
+.pack.low{background:transparent;border-style:dashed}
+.pack.low .price{font-size:1.8rem}
+.pack.low h3,.pack.mid h3{font-size:1.1rem}
+.pack.top{position:relative;background:var(--ink);color:var(--bg);border:0;padding:34px 30px;gap:16px;box-shadow:0 24px 50px -24px rgba(0,0,0,.45);z-index:1}
+.pack.top h3{font-size:1.6rem}
+.pack.top .price{font-size:3rem}
+.pack.top .cuotas,.pack.top .note{color:color-mix(in srgb,var(--bg) 72%,transparent)}
+.pack.top .note{border-top:1px solid color-mix(in srgb,var(--bg) 20%,transparent);padding-top:12px}
+.pack.top li::before{border-color:var(--dune)}
+.pack.top .badge{background:var(--dune);color:var(--ink)}
+.pack.top .btn{background:var(--dune);border-color:var(--dune);color:var(--ink)}
+.chip{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);color:var(--ink-2);padding:.25em .6em;border-radius:999px}
+.pack.mid:hover,.pack.low:hover{transform:translateY(-4px)}
+@media (min-width:861px){.pack.top{transform:scale(1.04)}.pack.top:hover{transform:scale(1.06)}}
+@media (max-width:860px){.pack.top{order:-1}}
+
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+.pack.top::before{content:"";position:absolute;inset:0;padding:1.5px;pointer-events:none;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  background:conic-gradient(from var(--ang),var(--dune),transparent 30%,var(--dune) 50%,transparent 80%,var(--dune))}
+
+@media (prefers-reduced-motion:no-preference){
+  .glow{animation:drift 16s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translate(-4%,-2%) scale(1)}to{transform:translate(5%,3%) scale(1.12)}}
+  .waves{animation:sea 18s linear infinite}
+  @keyframes sea{to{transform:translateX(-50%)}}
+  .hero-logo{animation:wipe 1.6s cubic-bezier(.65,0,.35,1) .1s both}
+  @keyframes wipe{from{clip-path:inset(0 100% 0 0);opacity:.2}to{clip-path:inset(0 0 0 0);opacity:1}}
+  .a1,.a2,.a3,.a4,.a5{animation:up .9s cubic-bezier(.2,.7,.2,1) both}
+  .a1{animation-delay:.05s}.a2{animation-delay:.9s}.a3{animation-delay:1.1s}.a4{animation-delay:1.3s}.a5{animation-delay:1.45s}
+  @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .pack.top::before{animation:spin 6s linear infinite}
+  @keyframes spin{to{--ang:360deg}}
+  @supports (animation-timeline: view()){
+    .head,.steps li,.anti li,.tq,.about .portrait,.about .copy,.gallery .ph,.video .ph,.pack.mid,.pack.low,.termgrid>div,.slot{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+    @keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  }
+}
+
+/* Portada y encabezado: siempre en niebla nocturna, sin importar la paleta */
+header.top,.hero{--bg:#141b1a;--bg-2:#1b2422;--ink:#e9e7e0;--ink-2:#a9b3b0;--line:#2f3b39;--sea:#6fb1aa;--sea-ink:#0e1514;--dune:#d6b383;--logo-filter:invert(1);background:var(--bg);color:var(--ink);color-scheme:dark}
+
+/* Barra superior flotante: transparente sobre la portada; al bajar se vuelve vidrio esmerilado. */
+header.top{position:sticky;top:0;z-index:15;background:transparent;transition:background .35s,box-shadow .35s,backdrop-filter .35s}
+header.top .wrap{padding-block:14px;flex-wrap:nowrap}
+main>.hero:first-child{margin-top:-58px;padding-top:calc(48px + 58px)}
+header.top.scrolled{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 10%,transparent)}
+.brand img{height:30px}
+nav.menu{flex-wrap:nowrap;align-items:center;gap:4px;font-size:.84rem;letter-spacing:.01em;padding:4px;border:1px solid color-mix(in srgb,var(--ink) 12%,transparent);border-radius:999px;background:color-mix(in srgb,var(--ink) 4%,transparent)}
+nav.menu a{padding:.42em .95em;border-radius:999px;color:color-mix(in srgb,var(--ink) 72%,transparent);transition:color .2s,background .2s;white-space:nowrap}
+nav.menu a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 8%,transparent)}
+nav.menu a.cta{background:var(--ink);color:var(--bg);font-weight:500;margin-left:4px}
+nav.menu a.cta:hover{background:color-mix(in srgb,var(--ink) 88%,transparent);color:var(--bg)}
+@media (max-width:760px){nav.menu{border:0;background:none;padding:0}nav.menu a:not(.cta){display:none}main>.hero:first-child{margin-top:-58px;padding-top:calc(40px + 58px)}}
+
+.about .grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center;max-width:960px}
+.about .portrait{aspect-ratio:4/5;max-width:100%}
+.about .copy{display:flex;flex-direction:column;gap:14px;min-width:0;max-width:60ch}
+.about .copy p{color:var(--ink-2)}
+.about .sign{font-family:var(--display);font-style:italic;font-size:1.4rem;color:var(--ink)!important}
+@media (max-width:860px){.about .grid{grid-template-columns:1fr}.about .portrait{max-width:320px}}
+
+.quote{padding-block:44px}
+.tq{margin:0 auto;max-width:720px;text-align:center;display:flex;flex-direction:column;gap:14px}
+.tq blockquote{margin:0;font-family:var(--display);font-style:italic;font-size:clamp(1.25rem,2.4vw,1.6rem);line-height:1.35;color:var(--ink)}
+.tq figcaption{font-size:.85rem;color:var(--ink-2)}
+.anti{list-style:none;margin:0 auto;padding:0;max-width:860px;display:grid;grid-template-columns:1fr 1fr;gap:18px 40px}
+.anti li{display:flex;flex-direction:column;gap:4px;padding-top:14px;border-top:1px solid var(--line);min-width:0}
+.anti s{font-family:var(--display);font-size:1.15rem;color:var(--ink-2);text-decoration-color:color-mix(in srgb,var(--dune) 80%,transparent);text-decoration-thickness:1.5px}
+.anti span{color:var(--ink)}
+@media (max-width:640px){.anti{grid-template-columns:1fr}}
+.modal{position:fixed;inset:0;z-index:30;background:rgba(10,14,13,.55);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-left,0px))}
+.modal-card{background:var(--bg);color:var(--ink);max-width:440px;width:100%;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+.wa-msg{background:color-mix(in srgb,var(--sea) 12%,var(--bg));border-radius:10px;padding:12px 14px;font-size:.92rem}
+.modal-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+[hidden]{display:none!important}
+.linkbtn{background:none;border:0;color:var(--ink-2);text-decoration:underline;cursor:pointer;font:500 .9rem var(--body)}
+@media (prefers-reduced-motion:no-preference){.modal:not([hidden]) .modal-card{animation:pop .22s ease-out}@keyframes pop{from{transform:translateY(10px) scale(.98);opacity:0}}}
+
+.chats{overflow:hidden}
+.rail{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 4px 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{display:none}
+.phone{position:relative;flex:0 0 250px;margin:0;scroll-snap-align:center;height:470px;border-radius:34px;border:8px solid #1b1d1f;background:#efe7dd;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 40px -24px rgba(0,0,0,.45);font-family:-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;color:#111}
+.phone.and{border-radius:22px;background:#ece5dd}
+.phone .ph-status{display:flex;justify-content:space-between;padding:8px 18px 2px;font-size:11px;background:#f6f6f6}
+.phone .ph-status.and{background:#075e54;color:#fff}
+.wa-head{display:flex;align-items:center;gap:8px;padding:6px 10px 8px;font-size:13px}
+.wa-head.ios{background:#f6f6f6;border-bottom:1px solid #ddd}
+.wa-head.and{background:#075e54;color:#fff}
+.wa-head .back{font-size:20px;line-height:1;color:#007aff}
+.wa-head.and .back{color:#fff;font-size:16px}
+.wa-head .av{width:28px;height:28px;border-radius:50%;background:#c7b9a8;color:#fff;display:grid;place-items:center;font-weight:600;font-size:12px}
+.wa-head .nm{flex:1;display:flex;flex-direction:column;font-weight:600;line-height:1.2;min-width:0}
+.wa-head .nm small{font-weight:400;font-size:10px;opacity:.7}
+.wa-head .ic{font-size:12px;opacity:.8;letter-spacing:4px}
+.wa-head.ios .ic{color:#007aff}
+.wa-body{flex:1;padding:12px 10px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;background-image:radial-gradient(rgba(0,0,0,.035) 1px,transparent 1px);background-size:10px 10px}
+.bb{max-width:82%;padding:6px 8px 4px;border-radius:8px;font-size:12.5px;line-height:1.35;box-shadow:0 1px 0 rgba(0,0,0,.1);display:flex;flex-direction:column}
+.bb.in{align-self:flex-start;background:#fff;border-top-left-radius:2px}
+.bb.out{align-self:flex-end;background:#dcf8c6;border-top-right-radius:2px}
+.phone.and .bb.out{background:#d9fdd3}
+.bb em{align-self:flex-end;font-style:normal;font-size:9.5px;color:#667781;margin-top:2px}
+.bb .tk{font-style:normal;color:#34b7f1;margin-left:3px}
+.wa-foot{display:flex;align-items:center;gap:8px;padding:8px 10px 14px;font-size:14px;color:#007aff;background:#f6f6f6}
+.wa-foot .field{flex:1;height:26px;border-radius:14px;background:#fff;border:1px solid #ddd}
+.wa-foot.and{background:transparent;color:#666}
+.wa-foot.and .field{display:flex;align-items:center;padding-left:12px;font-size:12px;color:#888;height:32px;border:0;border-radius:18px}
+.wa-foot.and .mic{width:32px;height:32px;border-radius:50%;background:#00a884;color:#fff;display:grid;place-items:center;font-size:10px}
+.phone .wm{position:absolute;inset:auto -40px 46% -40px;transform:rotate(-24deg);text-align:center;font:600 13px/1.6 var(--mono);letter-spacing:.2em;color:rgba(160,40,40,.55);border-block:1.5px solid rgba(160,40,40,.4);background:rgba(255,255,255,.35);pointer-events:none}
+.rail-nav{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:6px}
+.rail-nav button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-size:1.1rem}
+#railDots{display:flex;gap:6px}
+#railDots i{width:7px;height:7px;border-radius:50%;background:var(--line);display:block}
+#railDots i.on{background:var(--sea)}
+@media (min-width:1100px){.rail{justify-content:safe center}}
+
+.crops{padding-block:28px 36px;background:var(--bg);overflow:hidden}
+.crops-tag{text-align:center;margin-bottom:16px}
+.marquee{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;gap:20px;width:max-content;padding-block:6px}
+.crop{margin:0;flex:0 0 auto;width:250px;padding:12px 14px;border-radius:10px;background:#efe7dd;background-image:radial-gradient(rgba(0,0,0,.04) 1px,transparent 1px);background-size:9px 9px;box-shadow:0 10px 24px -14px rgba(0,0,0,.35);font-family:-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;color:#111}
+.crop:nth-child(odd){transform:rotate(-1.2deg)}.crop:nth-child(even){transform:rotate(1deg)}
+.crop.and{background-color:#ece5dd;border-radius:4px}
+.cb{background:#fff;border-radius:14px;border-top-left-radius:4px;padding:7px 10px 5px;display:flex;flex-direction:column;gap:2px;font-size:13px;line-height:1.35;box-shadow:0 1px 0 rgba(0,0,0,.1)}
+.crop.and .cb{border-radius:8px;border-top-left-radius:2px}
+.cb b{font-size:11.5px;color:#1f8a70;font-weight:600}
+.crop.ios .cb b{color:#d0457a}
+.cb b i{font-style:normal;font-weight:400;color:#a33;opacity:.8}
+.cb em{align-self:flex-end;font-style:normal;font-size:10px;color:#667781}
+@media (prefers-reduced-motion:no-preference){.track{animation:slide 45s linear infinite}.marquee:hover .track{animation-play-state:paused}@keyframes slide{to{transform:translateX(-50%)}}}
+@media (prefers-reduced-motion:reduce){.marquee{overflow-x:auto}}
+
+.tint{position:fixed;inset:0;z-index:15;pointer-events:none;mix-blend-mode:soft-light;opacity:0;background:transparent;transition:opacity .4s ease,background-color .4s ease}
+.temps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
+.temps button{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:transparent;color:var(--ink-2);font:500 .62rem var(--body);cursor:pointer;padding:2px}
+.temps i{width:26px;height:26px;border-radius:50%;display:block;border:1px solid rgba(0,0,0,.18)}
+.temps button[aria-pressed="true"]{color:var(--ink)}
+.temps button[aria-pressed="true"] i{outline:2px solid var(--ink);outline-offset:2px}
+
+.crop{display:flex;flex-direction:column;gap:8px}
+.cm{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:11px;color:#5b5348}
+.cm .ig{color:#8a3d62;font-weight:600}
+.cm .see{margin-left:auto;border:0;border-radius:999px;background:#1d2624;color:#f3efe8;font:600 11px var(--body);padding:5px 10px;cursor:pointer}
+.ses{max-width:520px}
+.ses-meta{color:var(--ink-2);font-size:.9rem}
+.ses-grid{display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:120px 120px;gap:8px}
+.ses-grid .ph:first-child{grid-row:span 2}
+.ses-grid .ph{border-radius:6px}
+@media (max-width:480px){.ses-grid{grid-template-rows:90px 90px}}
+
+/* v1.2 · fotos reales */
+.hero-photo{margin:44px 0 0;aspect-ratio:16/7;overflow:hidden;border-radius:2px;background:#0e1514}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:58% 58%;display:block}
+.gallery .grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:110px;gap:12px}
+.gm{position:relative}
+.gm.a{grid-column:span 4;grid-row:span 3}.gm.b{grid-column:span 2;grid-row:span 3}
+.gm.c{grid-column:span 2;grid-row:span 3}.gm.d{grid-column:span 3;grid-row:span 2}
+.gm .zoom{all:unset;display:block;width:100%;height:100%;cursor:zoom-in}
+.gm .zoom:focus-visible{outline:2px solid var(--dune);outline-offset:3px}
+.gm img{transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.gm:hover img{transform:scale(1.03)}
+.gm figcaption{position:absolute;left:10px;bottom:10px;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(10,14,13,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:.35em .65em;border-radius:3px;pointer-events:none}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(8,10,10,.92);display:grid;place-items:center;padding:24px}
+.lb[hidden]{display:none}
+.lb img{max-width:min(1400px,100%);max-height:calc(100vh - 110px);object-fit:contain;border-radius:2px}
+.lb p{color:#e9e7e0;font-size:.85rem;margin:12px 0 0;text-align:center}
+.lb button{position:absolute;border:0;background:rgba(255,255,255,.1);color:#fff;width:44px;height:44px;border-radius:50%;font-size:1.3rem;cursor:pointer}
+.lb .x{top:16px;right:16px}.lb .pv{left:16px;top:50%}.lb .nx{right:16px;top:50%}
+.vposter{display:flex}
+.vposter img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vposter::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,.05))}
+.vposter .play,.vposter .tag,.vposter .cap{z-index:1}
+.close.photo{position:relative;overflow:hidden;padding-block:clamp(90px,14vw,170px)}
+.close-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%;z-index:0}
+.close.photo .close-bg{left:auto;right:0;width:62%;object-position:50% 58%}
+.close.photo::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--bg) 38%,color-mix(in srgb,var(--bg) 40%,transparent) 48%,transparent 62%)}
+.close.photo .grid{grid-template-columns:minmax(0,500px);align-items:start}
+.vposter .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.close.photo .wrap{position:relative;z-index:2}
+.ses-grid{grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:130px 130px}
+.ses-grid .ph:first-child{grid-row:span 2}
+.ses-grid .ph:nth-child(4){grid-column:span 2}
+.ses-grid .ph{border-radius:6px;margin:0}
+@media (max-width:860px){
+  .gallery .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:120px;gap:8px}
+  .gm.a,.gm.d{grid-column:span 2;grid-row:span 2}
+  .gm.b,.gm.c{grid-column:span 1;grid-row:span 2}
+  .gm.mw{grid-column:span 2}
+  .hero-photo{aspect-ratio:4/5;margin-top:32px}
+  .close.photo{padding-top:0}
+  .close.photo .close-bg{position:relative;height:auto;width:100%;aspect-ratio:4/3;margin-bottom:28px}
+  .close.photo::before{display:none}
+}
+@media (max-width:480px){.ses-grid{grid-template-rows:96px 96px}}
+
+/* Sobrio (nov-2026): neutros, sin brillos ni acentos de color, para que mande la foto. */
+html.sb,html.sb :is(header.top,.hero,section,.pack,.summary,.modal-card,.picker,.cookie){--bg:#f8f7f4!important;--bg-2:#f0eeea!important;--ink:#1b1b1a!important;--ink-2:#64625e!important;--line:#e0ded9!important;--sea:#1b1b1a!important;--sea-ink:#f8f7f4!important;--dune:#8c8780!important;--ph-a:#e4e1db!important;--ph-b:#d6d3cc!important;--ph-c:#b9b5ae!important;--logo-filter:none!important;color-scheme:light}
+html.sb .glow{display:none}
+html.sb .waves{opacity:.22}
+html.sb .hero-photo{background:var(--bg-2)}
+html.sb .pack.top{background:var(--bg);color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+html.sb .pack.top::before{display:none}
+html.sb .pack.top .cuotas,html.sb .pack.top .note{color:var(--ink-2)}
+html.sb .pack.top .note{border-top-color:var(--line)}
+html.sb .pack.top li::before{border-color:var(--ink-2)}
+html.sb .pack.top .badge{background:var(--ink);color:var(--bg)}
+html.sb .pack.top .btn{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+html.sb .summary{background:var(--bg-2);border:1px solid var(--line)}
+html.sb .summary .tk span,html.sb .summary .total span:last-child{color:var(--ink)}
+html.sb .eyebrow{color:var(--ink-2)}
+html.sb .btn:focus-visible,html.sb button:focus-visible{outline-color:var(--ink)}
+
+html,body{margin:0}
+.picker,.tint{display:none!important}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="Serena Visuales, inicio"><img src="logo.png" alt="Serena Visuales" width="900" height="257"></a>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#como">Cómo es</a>
+      <a href="#quien">Quién soy</a>
+      <a href="#sesiones">Coberturas</a>
+      <a href="#dudas">Dudas</a>
+      <a class="cta" href="#agenda">Consultar fecha</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap grid">
+    <div class="copy">
+      <span class="eyebrow rule a1">Gabriel Gallardo Serena</span>
+      <img class="hero-logo" src="logo.png" alt="Serena Visuales" width="900" height="257">
+      <h1 class="a2">Su matrimonio, <em>contado con calma.</em></h1>
+      <p class="lead a3">Fotografía de matrimonios en La Serena, Coquimbo y todo el norte. Momentos reales, sin pasar la fiesta posando.</p>
+      <div class="ctas a4">
+        <a class="btn" href="#agenda">Consultar mi fecha</a>
+        <a class="btn ghost" href="#sesiones">Ver coberturas</a>
+      </div>
+      <p class="mini a5">Te respondo por WhatsApp en menos de 1 hora, de 9:00 a 21:00</p>
+    </div>
+    <figure class="hero-photo a5"><img src="img/hero-playa.jpg" alt="Novios caminando de la mano por la orilla de la playa" fetchpriority="high"></figure>
+  </div>
+  <svg class="waves" viewBox="0 0 2400 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 30 Q150 6 300 30 T600 30 T900 30 T1200 30 T1500 30 T1800 30 T2100 30 T2400 30"/>
+    <path d="M0 42 Q150 22 300 42 T600 42 T900 42 T1200 42 T1500 42 T1800 42 T2100 42 T2400 42"/>
+  </svg>
+</section>
+
+
+
+<section class="how" id="como">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Cómo es trabajar juntos</span>
+      <h2>De la primera consulta a sus fotos en la mano.</h2>
+    </div>
+    <ol class="steps">
+      <li><h3>Consultan su fecha</h3><p>Me cuentan cuándo y dónde se casan y qué se imaginan. Les respondo si estoy disponible y con una propuesta.</p></li>
+      <li><h3>Nos conocemos y reservan</h3><p>Una videollamada o un café para conversar sin apuro. La fecha queda bloqueada para ustedes con contrato y abono.</p></li>
+      <li><h3>El gran día</h3><p>Armamos juntos el plan del día. Llego antes de los preparativos y me quedo hasta el baile, discreto para que los momentos pasen sin interrupciones.</p></li>
+      <li><h3>Reciben su galería</h3><p>Un adelanto en pocos días y la galería completa, editada, en una galería privada para descargar y compartir.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Lo que no van a vivir</span>
+      <h2>Un día que disfrutan, no un día que posan.</h2>
+    </div>
+    <ul class="anti">
+      <li><s>Pasar la fiesta posando</s><span>Los retratos de pareja toman poco tiempo y el resto del día es de ustedes.</span></li>
+      <li><s>Un fotógrafo encima en la ceremonia</s><span>Trabajo discreto, sin interrumpir los momentos importantes.</span></li>
+      <li><s>Fotos grupales desordenadas</s><span>Llevamos una lista de grupos y yo organizo a la familia.</span></li>
+      <li><s>Esperar meses por sus fotos</s><span>Adelanto rápido y entrega completa en un plazo fijo por contrato.</span></li>
+      <li><s>Sorpresas en el precio</s><span>Todo por escrito: horas, traslados en la región y entrega.</span></li>
+      <li><s>Pagar todo de una vez</s><span>Reservan con abono y pagan el saldo en cuotas antes del matrimonio.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="about" id="quien">
+  <div class="wrap grid">
+    <div class="ph portrait" role="img" aria-label="Marcador de retrato">
+      <span class="tag">Foto real tuya · no usar IA aquí</span>
+      <p class="cap"><b>Retrato de Gabriel.</b> Con la cámara en la mano, luz natural, mirada cercana.</p>
+    </div>
+    <div class="copy">
+      <span class="eyebrow">Quién soy</span>
+      <h2>Soy Gabriel Gallardo y voy a estar con ustedes todo el día.</h2>
+      <p>Fotografío matrimonios en la Región de Coquimbo. Esta temporada acompañé a unas 12 parejas. Me gusta trabajar con calma: observar, guiar cuando hace falta y dejar que los momentos pasen sin interrumpirlos.</p>
+      <p>Muchas parejas me dicen que no les gusta salir en fotos. Por eso los guío con indicaciones simples, para que el día se sienta suyo y no una sesión de fotos.</p>
+      <p class="sign">Gabriel Gallardo</p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Galería</span>
+      <h2>De los preparativos al último baile.</h2>
+      <p class="lead">Seis matrimonios reales de la región: playa, parcela, viña y fiesta. Toquen una foto para verla en grande.</p>
+    </div>
+    <div class="grid">
+      <figure class="ph real gm a"><button type="button" class="zoom" aria-label="Ampliar foto: Novios abrazados bajo un parrón de hojas de otoño"><img src="img/vinedo.jpg" alt="Novios abrazados bajo un parrón de hojas de otoño" loading="lazy" style="object-position:50% 55%"></button><figcaption>Retratos</figcaption></figure>
+      <figure class="ph real gm b"><button type="button" class="zoom" aria-label="Ampliar foto: Novios a contraluz con el sol de la tarde entre los árboles"><img src="img/contraluz-dorado.jpg" alt="Novios a contraluz con el sol de la tarde entre los árboles" loading="lazy" style="object-position:50% 40%"></button><figcaption>Retratos</figcaption></figure>
+      <figure class="ph real gm c"><button type="button" class="zoom" aria-label="Ampliar foto: La mamá de la novia le da un beso mientras ella ríe"><img src="img/mama-abrazo.jpg" alt="La mamá de la novia le da un beso mientras ella ríe" loading="lazy" style="object-position:45% 40%"></button><figcaption>Preparativos</figcaption></figure>
+      <figure class="ph real gm c"><button type="button" class="zoom" aria-label="Ampliar foto: Novios saliendo de la ceremonia al aire libre de la mano"><img src="img/salida-pasillo.jpg" alt="Novios saliendo de la ceremonia al aire libre de la mano" loading="lazy" style="object-position:50% 45%"></button><figcaption>Ceremonia</figcaption></figure>
+      <figure class="ph real gm c"><button type="button" class="zoom" aria-label="Ampliar foto: Novios abrazados entre flores rojas y amarillas"><img src="img/flores-rojas.jpg" alt="Novios abrazados entre flores rojas y amarillas" loading="lazy" style="object-position:50% 35%"></button><figcaption>Retratos</figcaption></figure>
+      <figure class="ph real gm d"><button type="button" class="zoom" aria-label="Ampliar foto: La novia baila con su vestido girando en la pista"><img src="img/baile-fiesta.jpg" alt="La novia baila con su vestido girando en la pista" loading="lazy" style="object-position:45% 50%"></button><figcaption>Fiesta</figcaption></figure>
+      <figure class="ph real gm d"><button type="button" class="zoom" aria-label="Ampliar foto: Novios caminando de la mano hacia los cerros"><img src="img/caminata-cerros.jpg" alt="Novios caminando de la mano hacia los cerros" loading="lazy" style="object-position:50% 60%"></button><figcaption>Retratos</figcaption></figure>
+      <figure class="ph real gm c"><button type="button" class="zoom" aria-label="Ampliar foto: La novia con su ramo junto a la ventana"><img src="img/ventana-ramo.jpg" alt="La novia con su ramo junto a la ventana" loading="lazy" style="object-position:60% 40%"></button><figcaption>Preparativos</figcaption></figure>
+      <figure class="ph real gm c"><button type="button" class="zoom" aria-label="Ampliar foto: Novios sonriendo al salir de la ceremonia, en blanco y negro"><img src="img/byn-pasillo.jpg" alt="Novios sonriendo al salir de la ceremonia, en blanco y negro" loading="lazy" style="object-position:50% 35%"></button><figcaption>Ceremonia</figcaption></figure>
+      <figure class="ph real gm c mw"><button type="button" class="zoom" aria-label="Ampliar foto: Novios con el sol entre las hojas"><img src="img/sol-beso.jpg" alt="Novios con el sol entre las hojas" loading="lazy" style="object-position:50% 30%"></button><figcaption>Retratos</figcaption></figure>
+      <figure class="ph real gm d"><button type="button" class="zoom" aria-label="Ampliar foto: La novia corre por la orilla y el novio la sigue"><img src="img/playa-carrera.jpg" alt="La novia corre por la orilla y el novio la sigue" loading="lazy" style="object-position:45% 55%"></button><figcaption>Retratos</figcaption></figure>
+      <figure class="ph real gm d"><button type="button" class="zoom" aria-label="Ampliar foto: Manos de la novia con el anillo y su ramo"><img src="img/manos-anillo.jpg" alt="Manos de la novia con el anillo y su ramo" loading="lazy" style="object-position:55% 45%"></button><figcaption>Detalles</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="video">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Así se vive un matrimonio</span>
+      <h2>Un día completo en 90 segundos.</h2>
+    </div>
+    <div class="ph real vposter" role="img" aria-label="Portada del video: primer baile de los novios">
+      <img src="img/primer-baile.jpg" alt="" loading="lazy" style="object-position:50% 55%">
+      <span class="tag">Video real pendiente</span>
+      <div class="play" aria-hidden="true"></div>
+      <p class="cap"><b>Resumen de un matrimonio.</b> Preparativos, ceremonia, retratos y fiesta, con fotos reales y autorización de la pareja.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="packs" id="sesiones">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Coberturas 2026–2027</span>
+      <h2>Dos coberturas de matrimonio, sin letra chica.</h2>
+      <p class="lead">Valores en pesos chilenos. Reservan su fecha con abono y pueden pagar con Mercado Pago.</p>
+    </div>
+    <div class="packgrid">
+      <article class="pack mid">
+        <div class="row"><h3>Matrimonio II</h3></div>
+        <div><div class="price">$400.000</div><p class="cuotas">media jornada · 6 horas</p></div>
+        <ul>
+          <li>6 horas de cobertura</li>
+          <li>400 fotos digitales</li>
+          <li>10 fotos impresas en papel A5</li>
+          <li>Sesión de novios de 1 hora</li>
+        </ul>
+        <a class="btn ghost" href="#agenda" data-pack="esencial" data-ask="1">Me interesa</a>
+      </article>
+      <article class="pack top">
+        <div class="row"><h3>Matrimonio I</h3><span class="badge">Recomendada</span></div>
+        <div><div class="price">$600.000</div><p class="cuotas">todo el día · hasta 12 horas</p></div>
+        <ul>
+          <li>Hasta 12 horas de cobertura</li>
+          <li>Más de 600 fotos digitales</li>
+          <li>20 fotos impresas en papel A5</li>
+          <li>Sesión de novios de 1 h 30 min</li>
+          <li>Cobertura del civil de regalo</li>
+          <li>Digital Guest Experience de regalo</li>
+        </ul>
+        <p class="note">Por $200.000 más que Matrimonio II: el doble de horas, 200 fotos y 10 impresas más, sesión de novios más larga, y el civil y la galería de invitados de regalo.</p>
+        <a class="btn" href="#agenda" data-pack="experiencia" data-ask="1">Me interesa</a>
+      </article>
+      <article class="pack low">
+        <div class="row"><h3>Pre-boda</h3><span class="chip">Save the date</span></div>
+        <div><div class="price">$120.000</div><p class="cuotas">2 horas</p></div>
+        <ul>
+          <li>2 horas de sesión</li>
+          <li>50 fotos digitales</li>
+          <li>Entrega express</li>
+        </ul>
+        <p class="note">Para el anuncio de la fecha o para soltarse frente a la cámara antes del gran día.</p>
+        <a class="btn ghost" href="#agenda" data-pack="basica" data-ask="1">Me interesa</a>
+      </article>
+    </div>
+    <div class="extras">
+      <div><b>$90.000</b><span>post boda o trash the dress: 1 h 30, 20 fotos, entrega express</span></div>
+      <div><b>$60.000</b><span>Digital Guest Experience: galería interactiva en tiempo real de su celebración</span></div>
+      <div><b>$120.000</b><span>photostand para invitados, 70 fotos 10×15 (o $0 para ustedes si los invitados compran sus fotos)</span></div>
+      <div><b>Mercado Pago</b><span>paguen con tarjeta o transferencia</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="book vx" id="agenda">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Fechas · simulación</span>
+      <h2>Consulten si su fecha está libre.</h2>
+      <p class="lead">Las fechas de temporada se toman con meses de anticipación. Elijan su fecha y les confirmo la disponibilidad por WhatsApp.</p>
+      <div class="styletog" role="group" aria-label="Estilo de la agenda (prototipo)"><button type="button" data-st="vx" aria-pressed="true">Minimal</button><button type="button" data-st="" aria-pressed="false">Editorial</button></div>
+    </div>
+    <div class="grid">
+      <div class="cal">
+        <ol class="bsteps" id="bsteps"><li class="on"><b>01</b>Fecha</li><li><b>02</b>Cobertura</li><li><b>03</b>Sus datos</li></ol>
+        <div class="cal-head">
+          <button type="button" id="prev" aria-label="Mes anterior">‹</button>
+          <h3 id="monthLabel">diciembre 2026</h3>
+          <button type="button" id="next" aria-label="Mes siguiente">›</button>
+        </div>
+        <div class="dow"><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span></div>
+        <div class="days" id="days"></div>
+        <div class="legend"><span><i style="background:var(--dune)"></i>Disponible</span><span><i style="background:var(--line)"></i>Reservada</span></div>
+        <div id="slotWrap" hidden>
+          <p class="eyebrow" style="margin-top:20px" id="slotLabel">Horarios</p>
+          <div class="slots" id="slots"></div>
+        </div>
+      </div>
+
+      <form class="form" id="bookForm" novalidate>
+        <div class="field">
+          <label>Cobertura</label>
+          <div class="choice packs3">
+            <label><input type="radio" name="pack" id="p-ba" value="basica"><span><b>Pre-boda</b><i>2 horas</i></span></label>
+            <label><input type="radio" name="pack" id="p-es" value="esencial"><span><b>Matrimonio II</b><i>6 horas</i></span></label>
+            <label><input type="radio" name="pack" id="p-ex" value="experiencia" checked><span><b>Matrimonio I</b><i>Hasta 12 h</i></span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Ceremonia</label>
+          <div class="choice">
+            <label><input type="radio" name="tipo" value="Civil y fiesta" checked><span>Civil y fiesta</span></label>
+            <label><input type="radio" name="tipo" value="Religiosa"><span>Religiosa</span></label>
+            <label><input type="radio" name="tipo" value="Simbólica"><span>Simbólica</span></label>
+            <label><input type="radio" name="tipo" value="Solo civil"><span>Solo civil</span></label>
+          </div>
+        </div>
+        <div class="duo">
+          <div class="field">
+            <label for="nombre">Nombres de los novios</label>
+            <input id="nombre" name="nombre" autocomplete="name" value="" placeholder="Sus nombres">
+          </div>
+          <div class="field">
+            <label for="tel">WhatsApp</label>
+            <input id="tel" name="tel" inputmode="tel" value="+56 9 1234 5678">
+          </div>
+        </div>
+        <div class="field">
+          <label for="lugarTxt">Lugar de la celebración</label>
+          <input id="lugarTxt" name="lugarTxt" placeholder="Centro de eventos, viña, playa, parcela…">
+        </div>
+        <div class="duo">
+          <div class="field">
+            <label for="comuna">Comuna</label>
+            <select id="comuna" name="comuna"><option>La Serena</option><option>Coquimbo</option><option>Valle de Elqui</option><option>Ovalle y Limarí</option><option>Otra región (con traslado)</option></select>
+          </div>
+          <div class="field">
+            <label for="inv">Invitados</label>
+            <select id="inv" name="inv"><option>Menos de 50</option><option selected>50 a 100</option><option>100 a 150</option><option>Más de 150</option></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fuente">¿Cómo nos conocieron?</label>
+          <select id="fuente" name="fuente"><option>Instagram</option><option>Recomendación de otra pareja</option><option>Centro de eventos o wedding planner</option><option>Google</option><option>Otro</option></select>
+          <small>Solo usamos sus datos para responder esta consulta. No los compartimos ni los usamos para publicidad.</small>
+        </div>
+        <div class="summary" id="summary">
+          <div class="tk"><span>Su consulta</span><b>Serena Visuales</b></div>
+          <div class="line"><span>Fecha</span><span id="sFecha">Elijan un día en el calendario</span></div>
+          <div class="line"><span>Cobertura</span><span id="sPack">Matrimonio I</span></div>
+          <div class="line"><span>Lugar</span><span id="sLugar">La Serena</span></div>
+          <div class="line"><span>Respuesta</span><span>en menos de 24 h</span></div>
+          <div class="line total"><span>Inversión</span><span id="sTotal">$600.000</span></div>
+        </div>
+        <button class="btn" type="submit" id="payBtn" disabled>Elijan su fecha</button>
+        <p class="secure"><span>Sin compromiso</span><span aria-hidden="true">·</span><span>Se abre WhatsApp con su consulta</span></p>
+        <div class="notice" id="result" hidden></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<section class="terms" id="dudas">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Condiciones</span>
+      <h2>Lo que necesitan saber antes de reservar.</h2>
+    </div>
+    <div class="termgrid">
+      <div><b>Reserva de fecha</b><p>La fecha queda bloqueada solo para ustedes con contrato firmado y abono.</p></div>
+      <div><b>Saldo en cuotas</b><p>El resto se paga en cuotas y queda saldado antes del matrimonio.</p></div>
+      <div><b>Si cambian la fecha</b><p>El abono se traspasa a la nueva fecha, según disponibilidad.</p></div>
+      <div><b>Entrega</b><p>Adelanto en pocos días y galería completa en un plazo fijo por contrato.</p></div>
+    </div>
+    <div class="faq">
+      <details open><summary>No nos gusta salir en fotos. ¿Igual vamos a salir bien?</summary><p>Sí. La mayor parte del día solo observo. Para los retratos de pareja los guío con indicaciones simples, y la preboda sirve justamente para soltarse antes del gran día.</p></details>
+      <details><summary>¿Con cuánta anticipación debemos reservar?</summary><p>Las fechas de primavera y verano suelen tomarse con varios meses de anticipación. Si su matrimonio es pronto, consulten igual.</p></details>
+      <details><summary>¿Cuántas fotos recibimos?</summary><p>Matrimonio I: más de 600 fotos digitales y 20 impresas en A5. Matrimonio II: 400 digitales y 10 impresas. Pre-boda: 50 digitales con entrega express.</p></details>
+      <details><summary>¿Qué es la Digital Guest Experience?</summary><p>Una galería interactiva en tiempo real para capturar cada ángulo de su celebración. Va de regalo en Matrimonio I y se puede agregar a Matrimonio II por $60.000.</p></details>
+      <details><summary>¿Viajan fuera de La Serena?</summary><p>Sí, a toda la región y al resto de Chile. Dentro de la región el traslado va incluido; fuera, se cotiza aparte.</p></details>
+      <details><summary>¿Hacen video?</summary><p>Me dedico a la fotografía. Si quieren video, les recomiendo videógrafos con los que me coordino bien.</p></details>
+      <details><summary>¿Y si el día se atrasa o la fiesta se alarga?</summary><p>Llevamos un plan del día, pero me adapto a lo que pase. Si quieren más cobertura, se pueden sumar horas en el momento.</p></details>
+      <details><summary>¿Cómo pagamos?</summary><p>Reservan su fecha con un abono y pagan el saldo antes del matrimonio. Aceptamos transferencia y Mercado Pago. Todo queda en el contrato.</p></details>
+      <details><summary>¿Van a publicar nuestras fotos?</summary><p>No, salvo que firmen una autorización específica que indique qué fotos y dónde. Pueden retirar ese permiso cuando quieran.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="close photo">
+  <img class="close-bg" src="img/cierre-colina.jpg" alt="" loading="lazy">
+  <div class="wrap grid">
+    <div class="head" style="margin:0">
+      <span class="eyebrow">Pocas fechas por temporada</span>
+      <h2>Cuéntenme de su matrimonio.</h2>
+      <p class="lead">Tomo pocos matrimonios por temporada para dedicarle tiempo a cada pareja y a cada edición.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+      <a class="btn" href="#agenda">Consultar mi fecha</a>
+      <a class="wa" href="https://wa.me/56987213618" target="_blank" rel="noopener">WhatsApp +56 9 8721 3618</a><a class="wa" href="https://instagram.com/serenavisuales.cl" target="_blank" rel="noopener">@serenavisuales.cl</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><img class="foot-logo" src="logo.png" alt="Serena Visuales" width="900" height="257">Fotografía de matrimonios · La Serena, Coquimbo y todo el norte</span>
+    <span>@serenavisuales.cl · Gabriel Gallardo Serena, fotógrafo de bodas</span>
+  </div>
+</footer>
+
+
+
+<div class="modal" id="askModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="askTitle">
+    <h3 id="askTitle">¿Les interesa <span id="askPack">Matrimonio I</span>?</h3>
+    <p>Los llevo a WhatsApp con este mensaje listo para enviar:</p>
+    <p class="wa-msg" id="askMsg"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn" id="askGo">Escribir por WhatsApp</button>
+      <button type="button" class="btn ghost" id="askDate">Ver fechas primero</button>
+      <button type="button" class="linkbtn" id="askClose">Seguir mirando</button>
+    </div>
+    <p class="notice" id="askNote" hidden>Simulación: en el sitio real se abriría WhatsApp con este mensaje. El número todavía no está configurado.</p>
+  </div>
+</div>
+<div class="modal" id="sesModal" hidden>
+  <div class="modal-card ses" role="dialog" aria-modal="true" aria-labelledby="sesTitle">
+    <h3 id="sesTitle">Matrimonio de <span id="sesName"></span></h3>
+    <p class="ses-meta" id="sesMeta"></p>
+    <div class="ses-grid" id="sesGrid"></div>
+    <p class="notice">Fotos reales de un matrimonio; el nombre, el mensaje y el Instagram son de ejemplo. Antes de publicar se necesita la autorización escrita de la pareja.</p>
+    <div class="modal-actions"><button type="button" class="btn" id="sesBook">Consultar mi fecha</button><button type="button" class="linkbtn" id="sesClose">Cerrar</button></div>
+  </div>
+</div>
+<div class="tint" id="tint" aria-hidden="true"></div>
+<div class="picker" role="group" aria-label="Probar paletas">
+  <div class="bar"><p>Resto del sitio · <b id="palName">Niebla</b></p><button type="button" class="tog" id="palTog" aria-expanded="true">Ocultar</button></div>
+  <div id="palBody">
+    <div class="opts" id="palOpts"></div>
+    <p style="margin-top:12px">Temperatura · <b id="tempName">Neutra</b></p>
+    <div class="temps" id="temps">
+      <button type="button" data-t="-2"><i style="background:#5b8fd9"></i>Fría</button>
+      <button type="button" data-t="-1"><i style="background:#a9c6ea"></i>Fresca</button>
+      <button type="button" data-t="0"><i style="background:#ffffff"></i>Neutra</button>
+      <button type="button" data-t="1"><i style="background:#f6c48f"></i>Cálida</button>
+      <button type="button" data-t="2"><i style="background:#ee9a45"></i>Dorada</button>
+    </div>
+    <p style="margin-top:12px">Estilo del sitio · <b id="siteName">Editorial</b></p>
+    <div class="styletog" id="siteTog" style="margin-top:6px"><button type="button" data-v="sb" aria-pressed="true">Sobrio</button><button type="button" data-v="" aria-pressed="false">Editorial</button><button type="button" data-v="vx" aria-pressed="false">Minimal</button><button type="button" data-v="vw" aria-pressed="false">Minimal cálida</button></div>
+    <div class="nav" style="margin-top:10px"><button type="button" id="palPrev">‹ Anterior</button><button type="button" id="palNext">Siguiente ›</button></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const D=[{"n": "Catalina y Diego", "c": "La Serena", "m": "marzo", "l": "Centro de eventos", "p": ["ventana-ramo","mama-abrazo","zapatos-ventana","papa-mirada"]}, {"n": "Fernanda y Tomás", "c": "Coquimbo", "m": "enero", "l": "Playa", "p": ["playa-carrera","playa-abrazo","playa-beso","playa-byn"]}, {"n": "Javiera y Matías", "c": "Valle de Elqui", "m": "febrero", "l": "Viña", "p": ["vinedo-vertical","vinedo-risa","novia-salon","selfie-amigos"]}, {"n": "Constanza y Felipe", "c": "La Serena", "m": "diciembre", "l": "Iglesia y fiesta", "p": ["abrazo-flores","primer-baile","flores-rojas","baile-fiesta"]}, {"n": "Daniela y Sebastián", "c": "Ovalle", "m": "noviembre", "l": "Parcela", "p": ["salida-pasillo","anillos","arco","byn-pasillo"]}, {"n": "Valentina y José", "c": "Tongoy", "m": "abril", "l": "Playa", "p": ["caminata-cerros","novia-puerta","manos-anillo","carrera-pasto"]}], m=document.getElementById("sesModal");
+  document.querySelectorAll(".see").forEach(b=>b.addEventListener("click",()=>{
+    const d=D[+b.dataset.i]; document.getElementById("sesName").textContent=d.n;
+    document.getElementById("sesGrid").innerHTML=d.p.map((f,k)=>'<figure class="ph real"><img src="img/'+f+'.jpg" alt="Foto '+(k+1)+' del matrimonio de '+d.n+'"></figure>').join("");
+    document.getElementById("sesMeta").textContent=d.l+" · "+d.c+" · "+d.m+" · @instagram_pareja (ejemplo)";
+    m.hidden=false; document.getElementById("sesBook").focus();
+  }));
+  const close=()=>{m.hidden=true;};
+  document.getElementById("sesClose").addEventListener("click",close);
+  m.addEventListener("click",e=>{if(e.target===m) close();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!m.hidden) close();});
+  document.getElementById("sesBook").addEventListener("click",()=>{close();document.getElementById("agenda").scrollIntoView();});
+})();
+</script>
+<script>
+(function(){
+  const T={"-2":["Fría","#1f5fd0",.55],"-1":["Fresca","#3f7fd6",.3],"0":["Neutra","transparent",0],"1":["Cálida","#ff8a2a",.3],"2":["Dorada","#ff7a10",.55]};
+  const tint=document.getElementById("tint"), name=document.getElementById("tempName"), btns=document.querySelectorAll("#temps button");
+  function setT(k){ if(!T[k]) k="0"; const [n,c,o]=T[k]; tint.style.backgroundColor=c; tint.style.opacity=o; name.textContent=n;
+    btns.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.t===k))); try{localStorage.setItem("temp",k);}catch(e){} }
+  btns.forEach(b=>b.addEventListener("click",()=>setT(b.dataset.t)));
+  let k="0"; try{k=localStorage.getItem("temp")||"0";}catch(e){} setT(k);
+})();
+</script>
+<script>
+(function(){
+  // [nombre, bg, bg-2, ink, ink-2, line, acento, texto-sobre-acento, arena, oscura?]
+  const P={
+    niebla:["Niebla","#f3f1ec","#e7e6df","#1d2725","#4d5a57","#cfd2cb","#2c625e","#f3f1ec","#b9925f"],
+    brumac:["Bruma cálida","#f2f1ec","#e9e2d6","#1d2624","#575a52","#d8d2c6","#2c625e","#f7f5f0","#c08f5a"],
+    brumad:["Bruma y durazno","#f4f1ed","#f0e2d6","#22231f","#5f5a52","#e0d3c6","#2c625e","#fbf7f2","#c98a5e"],
+    bruma:["Bruma marina","#eef2f1","#dfe7e5","#18292a","#4c5f60","#c9d6d4","#2f6b66","#f2f7f6","#b9925f"],
+    blanco:["Blanco","#ffffff","#f1f3f2","#151a19","#56605e","#dbe0de","#2c625e","#ffffff","#b08a55"],
+    piedra:["Piedra","#f2f0ed","#e4e0da","#22201d","#5c5751","#d6d1c9","#3f5753","#f7f6f3","#a8865a"],
+    duna:["Duna","#f6f1e9","#ece2d3","#26211b","#665b4d","#ddd1bf","#2c625e","#fbf8f3","#b08a55"],
+    salvia:["Salvia","#eff1eb","#e0e5da","#1f2a1f","#55614f","#cdd4c5","#4d6a47","#f4f6f1","#a68a5c"],
+    rosa:["Rosa nude","#f7efeb","#efdfd8","#2a1f1d","#6b5853","#e1cec6","#7d4f45","#fbf4f1","#b98a6a"],
+    champana:["Champaña","#faf6ee","#efe5d2","#2a241a","#6b604c","#e2d6bf","#9c7a3c","#fffaf0","#c9a45c"],
+    celeste:["Celeste mar","#f1f6f8","#dfeaef","#142833","#4d6470","#cad9e0","#2f6f8a","#f4f9fb","#c3a173"]
+  };
+  const keys=Object.keys(P), root=document.documentElement;
+  const VARS=["--bg","--bg-2","--ink","--ink-2","--line","--sea","--sea-ink","--dune","--ph-a","--ph-b","--ph-c","--logo-filter","color-scheme","--warn-bg","--warn-ink"];
+  const opts=document.getElementById("palOpts"), nameEl=document.getElementById("palName");
+  let cur="niebla";
+  keys.forEach(k=>{
+    const d=P[k], b=document.createElement("button");
+    b.type="button"; b.className="sw"; b.dataset.pal=k;
+    const bg=d[1]||"#f3f1ec", ac=d[6]||"#2c625e";
+    b.innerHTML='<i style="background:linear-gradient(135deg,'+bg+' 0 50%,'+ac+' 50% 100%)"></i>'+d[0];
+    b.addEventListener("click",()=>setPal(k));
+    opts.appendChild(b);
+  });
+  function setPal(k){
+    if(!P[k]) k="niebla";
+    cur=k; const d=P[k];
+    VARS.forEach(v=>root.style.removeProperty(v));
+    if(d[1]){
+      const [ ,bg,bg2,ink,ink2,line,sea,seaInk,dune,dark]=d;
+      const set={"--bg":bg,"--bg-2":bg2,"--ink":ink,"--ink-2":ink2,"--line":line,"--sea":sea,"--sea-ink":seaInk,"--dune":dune,
+        "--ph-a":"color-mix(in srgb,"+dune+" 35%,"+bg2+")","--ph-b":"color-mix(in srgb,"+sea+" 25%,"+bg2+")","--ph-c":"color-mix(in srgb,"+sea+" 45%,"+ink2+")",
+        "--logo-filter":dark?"invert(1)":"none","color-scheme":dark?"dark":"light","--warn-bg":dark?"#3a3010":"#fff1c9","--warn-ink":dark?"#f5dc8e":"#5a4100"};
+      Object.entries(set).forEach(([v,x])=>root.style.setProperty(v,x));
+    }
+    if(k==="noche") root.setAttribute("data-palette","noche"); else root.removeAttribute("data-palette");
+    nameEl.textContent=d[0];
+    opts.querySelectorAll(".sw").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.pal===k)));
+    try{localStorage.setItem("pal2",k);}catch(e){}
+  }
+  const step=n=>setPal(keys[(keys.indexOf(cur)+n+keys.length)%keys.length]);
+  document.getElementById("palPrev").addEventListener("click",()=>step(-1));
+  document.getElementById("palNext").addEventListener("click",()=>step(1));
+  const tog=document.getElementById("palTog"), body=document.getElementById("palBody");
+  tog.addEventListener("click",()=>{const open=body.hidden; body.hidden=!open; tog.textContent=open?"Ocultar":"Mostrar"; tog.setAttribute("aria-expanded",String(open));});
+  let saved="brumac"; try{saved=localStorage.getItem("pal2")||"brumac";}catch(e){}
+  setPal(saved);
+})();
+(function(){
+  const NAMES={basica:"Pre-boda",esencial:"Matrimonio II",experiencia:"Matrimonio I"};
+  const PRICES={basica:120000,esencial:400000,experiencia:600000};
+  const fmt=n=>"$"+n.toLocaleString("es-CL");
+  const WA="56987213618";
+  const IDS={basica:"p-ba",esencial:"p-es",experiencia:"p-ex"};
+  const months=[[2026,10],[2026,11],[2027,0],[2027,1],[2027,2],[2027,3],[2027,4]]; // nov 2026 a may 2027
+  const TODAY=new Date(2026,9,22);
+  let mi=0, selDate=null;
+  const daysEl=document.getElementById("days"), label=document.getElementById("monthLabel");
+  const prev=document.getElementById("prev"), next=document.getElementById("next");
+  const slotWrap=document.getElementById("slotWrap"), slotsEl=document.getElementById("slots"), slotLabel=document.getElementById("slotLabel");
+  const payBtn=document.getElementById("payBtn"), result=document.getElementById("result");
+  const nice=d=>d.toLocaleDateString("es-CL",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  // Fechas ya tomadas (AAAA-MM-DD). Agregar aquí cada reserva confirmada.
+  const BOOKED=[];
+  function status(d){
+    const wd=d.getDay();
+    if(d<TODAY||(wd!==5&&wd!==6)) return "off";
+    const peak=[11,0,1,2].includes(d.getMonth());
+    const seed=(d.getDate()*7+d.getMonth()*5+wd)%10;
+    const iso=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    return BOOKED.includes(iso)?"full":"free";
+  }
+  function freeIn(y,m){let n=0;const L=new Date(y,m+1,0).getDate();for(let i=1;i<=L;i++){if(status(new Date(y,m,i))==="free")n++;}return n;}
+  function render(){
+    const [y,m]=months[mi];
+    const first=new Date(y,m,1);
+    label.innerHTML="<em>"+first.toLocaleDateString("es-CL",{month:"long"})+"</em><span>"+y+"</span>";
+    prev.disabled=mi===0; next.disabled=mi===months.length-1;
+    daysEl.innerHTML="";
+    const lead=(first.getDay()+6)%7;
+    for(let i=0;i<lead;i++){daysEl.appendChild(document.createElement("span"));}
+    const n=new Date(y,m+1,0).getDate();
+    for(let day=1;day<=n;day++){
+      const d=new Date(y,m,day), st=status(d);
+      const b=document.createElement("button");
+      b.type="button"; b.textContent=day; b.className=st;
+      b.setAttribute("aria-label",nice(d)+(st==="free"?", disponible":st==="full"?", reservada":", sin matrimonios"));
+      if(st!=="free") b.disabled=true;
+      if(selDate&&+selDate===+d) b.classList.add("sel");
+      b.addEventListener("click",()=>{selDate=d;render();showDate();update();});
+      daysEl.appendChild(b);
+    }
+  }
+  function showDate(){
+    if(!selDate){slotWrap.hidden=true;return;}
+    slotWrap.hidden=false;
+    const left=freeIn(selDate.getFullYear(),selDate.getMonth());
+    slotLabel.textContent="Su fecha";
+    slotsEl.innerHTML='<div class="datecard"><b>'+nice(selDate)+'</b><small>Les confirmo por WhatsApp si la fecha sigue libre.</small><small>¿Civil entre semana? Escríbanme igual.</small></div>';
+  }
+  function pack(){return document.querySelector('input[name="pack"]:checked').value;}
+  function update(){
+    document.getElementById("sPack").textContent=NAMES[pack()];
+    document.getElementById("sTotal").textContent=fmt(PRICES[pack()]);
+    document.getElementById("sLugar").textContent=(document.getElementById("lugarTxt").value.trim()?document.getElementById("lugarTxt").value.trim()+", ":"")+document.getElementById("comuna").value;
+    document.getElementById("sFecha").textContent=selDate?selDate.toLocaleDateString("es-CL",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"Elijan un día en el calendario";
+    payBtn.disabled=!selDate;
+    payBtn.textContent=selDate?"Consultar disponibilidad":"Elijan su fecha";
+    const st=document.querySelectorAll("#bsteps li"), stage=selDate?2:0;
+    st.forEach((li,i)=>{li.classList.toggle("done",i<stage);li.classList.toggle("on",i===stage);});
+    result.hidden=true;
+  }
+  prev.addEventListener("click",()=>{if(mi>0){mi--;render();}});
+  next.addEventListener("click",()=>{if(mi<months.length-1){mi++;render();}});
+  document.querySelectorAll('input[name="pack"]').forEach(r=>r.addEventListener("change",update));
+  document.getElementById("comuna").addEventListener("change",update);
+  document.getElementById("lugarTxt").addEventListener("input",update);
+  const modal=document.getElementById("askModal"); let askK="experiencia";
+  document.querySelectorAll("[data-pack]").forEach(a=>a.addEventListener("click",e=>{
+    document.getElementById(IDS[a.dataset.pack]).checked=true; update();
+    if(a.dataset.ask){
+      e.preventDefault(); askK=a.dataset.pack;
+      document.getElementById("askPack").textContent=NAMES[askK];
+      document.getElementById("askMsg").textContent="Hola Gabriel, nos casamos el [fecha] en [lugar] y nos interesa "+NAMES[askK]+" ("+fmt(PRICES[askK])+"). ¿Tienes la fecha disponible?";
+      document.getElementById("askNote").hidden=true; modal.hidden=false; document.getElementById("askGo").focus();
+    }
+  }));
+  const closeAsk=()=>{modal.hidden=true;};
+  document.getElementById("askClose").addEventListener("click",closeAsk);
+  modal.addEventListener("click",e=>{if(e.target===modal) closeAsk();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!modal.hidden) closeAsk();});
+  document.getElementById("askGo").addEventListener("click",()=>{window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(document.getElementById("askMsg").textContent),"_blank","noopener");});
+  document.getElementById("askDate").addEventListener("click",()=>{closeAsk();document.getElementById("agenda").scrollIntoView();});
+  document.getElementById("bookForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    if(!selDate) return;
+    const tipo=document.querySelector('input[name="tipo"]:checked').value;
+    const msg="Hola Gabriel, somos "+document.getElementById("nombre").value+". Nos casamos el "+nice(selDate)+" en "+document.getElementById("sLugar").textContent+
+      " ("+tipo.toLowerCase()+", "+document.getElementById("inv").value.toLowerCase()+" invitados). Nos interesa "+NAMES[pack()]+" ("+fmt(PRICES[pack()])+"). ¿Tienes la fecha disponible? Te encontramos por: "+document.getElementById("fuente").value+".";
+    result.hidden=false;
+    result.innerHTML="<b>Se abrió WhatsApp con este mensaje.</b> "+msg+"";
+    window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(msg),"_blank","noopener");
+  });
+  render(); update();
+})();
+</script>
+<script>
+(()=>{const sec=document.getElementById("agenda"),bs=sec.querySelectorAll(".styletog button");
+ function set(v){sec.classList.toggle("vx",v==="vx");bs.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.st===v)));try{localStorage.setItem("agst",v)}catch(e){}}
+ let v="vx";try{const x=localStorage.getItem("agst");if(x!==null)v=x}catch(e){}
+ set(v);bs.forEach(b=>b.addEventListener("click",()=>set(b.dataset.st)));})();
+</script>
+<script>
+(()=>{const h=document.documentElement,ag=document.getElementById("agenda"),bs=document.querySelectorAll("#siteTog button"),nm=document.getElementById("siteName");
+ function set(v){const m=v==="vx"||v==="vw";h.classList.toggle("vx",m);h.classList.toggle("vw",v==="vw");h.classList.toggle("sb",v==="sb");
+  if(m) ag.classList.add("vx"); else if(v==="sb") ag.classList.remove("vx"); else {let a="vx";try{const x=localStorage.getItem("agst");if(x!==null)a=x}catch(e){} ag.classList.toggle("vx",a==="vx");}
+  bs.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v))); nm.textContent=v==="sb"?"Sobrio":v==="vw"?"Minimal cálida":v==="vx"?"Minimal (Vercel)":"Editorial";
+  try{localStorage.setItem("site2",v)}catch(e){}}
+ let v="sb";try{v=localStorage.getItem("site2")??"sb"}catch(e){} set(v);
+ bs.forEach(b=>b.addEventListener("click",()=>set(b.dataset.v)));})();
+</script>
+<script>
+(()=>{const h=document.querySelector("header.top");const f=()=>h.classList.toggle("scrolled",scrollY>24);addEventListener("scroll",f,{passive:true});f();})();
+</script>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <img id="lbImg" alt=""><p id="lbCap"></p>
+  <button type="button" class="pv" id="lbPrev" aria-label="Anterior">‹</button><button type="button" class="nx" id="lbNext" aria-label="Siguiente">›</button><button type="button" class="x" id="lbClose" aria-label="Cerrar">×</button>
+</div>
+<script>
+(()=>{const L=document.getElementById("lb"),I=document.getElementById("lbImg"),C=document.getElementById("lbCap"),Z=[...document.querySelectorAll(".gallery .zoom")];let k=0,last=null;
+ const show=i=>{k=(i+Z.length)%Z.length;const im=Z[k].querySelector("img");I.src=im.src;I.alt=im.alt;C.textContent=Z[k].parentNode.querySelector("figcaption").textContent+" · "+im.alt;};
+ Z.forEach((z,i)=>z.addEventListener("click",()=>{last=z;show(i);L.hidden=false;document.getElementById("lbClose").focus();}));
+ const close=()=>{L.hidden=true;if(last)last.focus();};
+ document.getElementById("lbClose").addEventListener("click",close);
+ document.getElementById("lbPrev").addEventListener("click",()=>show(k-1));
+ document.getElementById("lbNext").addEventListener("click",()=>show(k+1));
+ L.addEventListener("click",e=>{if(e.target===L)close();});
+ document.addEventListener("keydown",e=>{if(L.hidden)return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")show(k-1);if(e.key==="ArrowRight")show(k+1);});
+})();
+</script>
+<!-- Medición: Pixel de Meta con consentimiento. Sin ID de Pixel no carga nada. -->
+<div class="cookie" id="cookie" hidden role="dialog" aria-label="Aviso de cookies">
+  <p>Uso cookies de Meta para saber qué anuncios les traen hasta aquí. No guardo sus datos personales en este sitio. <a href="privacidad.html">Más información</a></p>
+  <div><button type="button" class="btn" id="ckYes">Aceptar</button><button type="button" class="linkbtn" id="ckNo">Solo necesarias</button></div>
+</div>
+<style>
+.cookie{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:70;width:min(560px,calc(100% - 24px));display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:14px 16px;box-shadow:0 12px 32px rgba(0,0,0,.18);font-size:.86rem;line-height:1.45}
+.cookie[hidden]{display:none}
+.cookie p{margin:0;flex:1 1 260px}
+.cookie a{color:inherit}
+.cookie div{display:flex;gap:10px;align-items:center}
+.cookie .btn{padding:.55em 1.1em;font-size:.85rem}
+</style>
+<script>
+(()=>{
+ const PIXEL_ID=""; // ← ID del Pixel "Serena Visuales" (Events Manager). Vacío = no se mide nada.
+ const NAMES={basica:"Pre-boda",esencial:"Matrimonio II",experiencia:"Matrimonio I"},PRICES={basica:120000,esencial:400000,experiencia:600000};
+ let ok=false;
+ const load=()=>{if(!PIXEL_ID||window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init',PIXEL_ID);fbq('track','PageView');};
+ const ev=(name,data,custom)=>{if(!ok||!window.fbq)return;fbq(custom?'trackCustom':'track',name,data||{});};
+ const C=document.getElementById("cookie");let v=null;try{v=localStorage.getItem("sv_consent")}catch(e){}
+ const set=x=>{try{localStorage.setItem("sv_consent",x)}catch(e){}C.hidden=true;if(x==="si"){ok=true;load();}};
+ if(v==="si"){ok=true;load();}else if(v!=="no"&&PIXEL_ID){C.hidden=false;}
+ document.getElementById("ckYes").addEventListener("click",()=>set("si"));
+ document.getElementById("ckNo").addEventListener("click",()=>set("no"));
+ // Contacto por WhatsApp (botones y enlaces) y clic a Instagram
+ document.addEventListener("click",e=>{const a=e.target.closest('a[href*="wa.me"],#askGo');if(a)ev("Contact",{content_name:"WhatsApp",content_category:a.id==="askGo"?"cobertura":"enlace"});
+  if(e.target.closest('a[href*="instagram.com"]'))ev("ClicInstagram",{},true);
+  const p=e.target.closest("[data-pack]");if(p)ev("ViewContent",{content_name:NAMES[p.dataset.pack],content_category:"cobertura",value:PRICES[p.dataset.pack],currency:"CLP"});},true);
+ // Consulta de fecha enviada desde la agenda = Lead
+ const f=document.getElementById("bookForm");
+ if(f)f.addEventListener("submit",()=>{const fe=document.getElementById("sFecha");if(!fe||/Elijan/.test(fe.textContent))return;
+  const r=document.querySelector('input[name="pack"]:checked'),k=r&&r.value;ev("Lead",{content_name:NAMES[k]||"Consulta de fecha",value:PRICES[k]||0,currency:"CLP"});},true);
+})();
+</script>
+</body>
+</html>
