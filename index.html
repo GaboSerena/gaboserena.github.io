@@ -243,7 +243,8 @@ nav.menu a:hover{color:var(--ink)}
 .summary .total{border-top:1px dashed var(--line);margin-top:8px;padding-top:14px;align-items:baseline}
 .summary .total span:first-child{color:var(--ink);font-weight:500}
 .summary .total span:last-child{font:400 1.9rem/1 var(--display);color:#d6b383}
-#payBtn{width:100%;justify-content:center;padding:1em 1.3em;font-size:.95rem;letter-spacing:.02em}
+#payBtn,#talkBtn{width:100%;justify-content:center;padding:1em 1.3em;font-size:.95rem;letter-spacing:.02em}
+#talkBtn{margin-top:10px}
 #payBtn[disabled]{opacity:.45;cursor:not-allowed}
 .secure{display:flex;justify-content:center;gap:8px;font-size:.74rem;color:var(--ink-2);margin-top:-8px}
 @media (max-width:760px){.cal{border-right:0;border-bottom:1px solid var(--line);padding:22px 18px}.form{padding:22px 18px}.choice.packs3 label{padding:10px 8px 8px}.choice.packs3 b{font-size:.98rem}.duo{grid-template-columns:1fr}}
@@ -819,7 +820,7 @@ html,body{margin:0}
     <div class="head">
       <span class="eyebrow">Fechas · simulación</span>
       <h2>Consulten si su fecha está libre.</h2>
-      <p class="lead">Las fechas de temporada se toman con meses de anticipación. Elijan su fecha y les confirmo la disponibilidad por WhatsApp.</p>
+      <p class="lead">Las fechas de temporada se toman con meses de anticipación. Elijan su fecha y resérvenla con un abono del 50%, o escríbanme si prefieren conversar primero.</p>
       <div class="styletog" role="group" aria-label="Estilo de la agenda (prototipo)"><button type="button" data-st="vx" aria-pressed="true">Minimal</button><button type="button" data-st="" aria-pressed="false">Editorial</button></div>
     </div>
     <div class="grid">
@@ -868,6 +869,10 @@ html,body{margin:0}
           </div>
         </div>
         <div class="field">
+          <label for="email">Correo</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="Para enviarles el comprobante de pago">
+        </div>
+        <div class="field">
           <label for="lugarTxt">Lugar de la celebración</label>
           <input id="lugarTxt" name="lugarTxt" placeholder="Centro de eventos, viña, playa, parcela…">
         </div>
@@ -893,9 +898,11 @@ html,body{margin:0}
           <div class="line"><span>Lugar</span><span id="sLugar">La Serena</span></div>
           <div class="line"><span>Respuesta</span><span>en menos de 24 h</span></div>
           <div class="line total"><span>Inversión</span><span id="sTotal">$600.000</span></div>
+          <div class="line"><span>Abono para reservar (50%)</span><span id="sAbono">$300.000</span></div>
         </div>
         <button class="btn" type="submit" id="payBtn" disabled>Elijan su fecha</button>
-        <p class="secure"><span>Sin compromiso</span><span aria-hidden="true">·</span><span>Se abre WhatsApp con su consulta</span></p>
+        <button class="btn ghost" type="button" id="talkBtn">Tengo dudas, ¿conversamos?</button>
+        <p class="secure"><span>Pago seguro con Flow</span><span aria-hidden="true">·</span><span>¿Dudas? Les respondo por WhatsApp</span></p>
         <div class="notice" id="result" hidden></div>
       </form>
     </div>
@@ -1078,9 +1085,10 @@ html,body{margin:0}
   const PRICES={basica:120000,esencial:400000,experiencia:600000};
   const fmt=n=>"$"+n.toLocaleString("es-CL");
   const WA="56987213618";
+  const ABONO=50; // % del valor que se paga al reservar (debe coincidir con netlify/lib/flow.mjs)
   const IDS={basica:"p-ba",esencial:"p-es",experiencia:"p-ex"};
   const months=[[2026,10],[2026,11],[2027,0],[2027,1],[2027,2],[2027,3],[2027,4]]; // nov 2026 a may 2027
-  const TODAY=new Date(2026,9,22);
+  const TODAY=(()=>{const t=new Date();t.setHours(0,0,0,0);return t;})();
   let mi=0, selDate=null;
   const daysEl=document.getElementById("days"), label=document.getElementById("monthLabel");
   const prev=document.getElementById("prev"), next=document.getElementById("next");
@@ -1123,16 +1131,17 @@ html,body{margin:0}
     slotWrap.hidden=false;
     const left=freeIn(selDate.getFullYear(),selDate.getMonth());
     slotLabel.textContent="Su fecha";
-    slotsEl.innerHTML='<div class="datecard"><b>'+nice(selDate)+'</b><small>Les confirmo por WhatsApp si la fecha sigue libre.</small><small>¿Civil entre semana? Escríbanme igual.</small></div>';
+    slotsEl.innerHTML='<div class="datecard"><b>'+nice(selDate)+'</b><small>La reservan pagando el abono, y yo les confirmo por WhatsApp.</small><small>¿Civil entre semana? Escríbanme igual.</small></div>';
   }
   function pack(){return document.querySelector('input[name="pack"]:checked').value;}
   function update(){
     document.getElementById("sPack").textContent=NAMES[pack()];
     document.getElementById("sTotal").textContent=fmt(PRICES[pack()]);
+    document.getElementById("sAbono").textContent=fmt(Math.round(PRICES[pack()]*ABONO/100));
     document.getElementById("sLugar").textContent=(document.getElementById("lugarTxt").value.trim()?document.getElementById("lugarTxt").value.trim()+", ":"")+document.getElementById("comuna").value;
     document.getElementById("sFecha").textContent=selDate?selDate.toLocaleDateString("es-CL",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"Elijan un día en el calendario";
     payBtn.disabled=!selDate;
-    payBtn.textContent=selDate?"Consultar disponibilidad":"Elijan su fecha";
+    payBtn.textContent=selDate?"Quiero reservar ya":"Elijan su fecha";
     const st=document.querySelectorAll("#bsteps li"), stage=selDate?2:0;
     st.forEach((li,i)=>{li.classList.toggle("done",i<stage);li.classList.toggle("on",i===stage);});
     result.hidden=true;
@@ -1158,15 +1167,39 @@ html,body{margin:0}
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!modal.hidden) closeAsk();});
   document.getElementById("askGo").addEventListener("click",()=>{window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(document.getElementById("askMsg").textContent),"_blank","noopener");});
   document.getElementById("askDate").addEventListener("click",()=>{closeAsk();document.getElementById("agenda").scrollIntoView();});
-  document.getElementById("bookForm").addEventListener("submit",e=>{
+  const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  function details(){
+    const tipo=document.querySelector('input[name="tipo"]:checked').value;
+    return {tipo, lugar:document.getElementById("sLugar").textContent, inv:document.getElementById("inv").value, fuente:document.getElementById("fuente").value,
+      nombre:document.getElementById("nombre").value.trim(), tel:document.getElementById("tel").value.trim()};
+  }
+  function show(html,bad){result.hidden=false;result.innerHTML=html;result.classList.toggle("bad",!!bad);}
+  // "Tengo dudas, ¿conversamos?" → WhatsApp
+  document.getElementById("talkBtn").addEventListener("click",()=>{
+    const x=details();
+    const msg="Hola Gabriel"+(x.nombre?", somos "+x.nombre:"")+". "+(selDate?"Nos casamos el "+nice(selDate)+" en "+x.lugar+" ("+x.tipo.toLowerCase()+", "+x.inv.toLowerCase()+" invitados). ":"")+
+      "Nos interesa "+NAMES[pack()]+" ("+fmt(PRICES[pack()])+") y tenemos algunas dudas, ¿podemos conversar?";
+    window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(msg),"_blank","noopener");
+  });
+  // "Quiero reservar ya" → pago del abono con Flow
+  document.getElementById("bookForm").addEventListener("submit",async e=>{
     e.preventDefault();
     if(!selDate) return;
-    const tipo=document.querySelector('input[name="tipo"]:checked').value;
-    const msg="Hola Gabriel, somos "+document.getElementById("nombre").value+". Nos casamos el "+nice(selDate)+" en "+document.getElementById("sLugar").textContent+
-      " ("+tipo.toLowerCase()+", "+document.getElementById("inv").value.toLowerCase()+" invitados). Nos interesa "+NAMES[pack()]+" ("+fmt(PRICES[pack()])+"). ¿Tienes la fecha disponible? Te encontramos por: "+document.getElementById("fuente").value+".";
-    result.hidden=false;
-    result.innerHTML="<b>Se abrió WhatsApp con este mensaje.</b> "+msg+"";
-    window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(msg),"_blank","noopener");
+    const x=details(), email=document.getElementById("email").value.trim();
+    if(!x.nombre){show("Escriban sus nombres para reservar.",1);document.getElementById("nombre").focus();return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){show("Escriban un correo válido para enviarles el comprobante.",1);document.getElementById("email").focus();return;}
+    payBtn.disabled=true; payBtn.textContent="Conectando con Flow…";
+    try{
+      const r=await fetch("/.netlify/functions/flow-crear",{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({item:pack(),abono:true,email,nombre:x.nombre,fecha:iso(selDate),
+          detalle:x.tipo+" · "+x.lugar+" · "+x.inv+" invitados · WhatsApp "+x.tel+" · "+x.fuente})});
+      const data=await r.json();
+      if(!r.ok||!data.url) throw new Error(data.error||"No se pudo iniciar el pago.");
+      location.href=data.url;
+    }catch(err){
+      show(err.message+" Si sigue fallando, escríbanme por WhatsApp.",1);
+      payBtn.disabled=false; payBtn.textContent="Quiero reservar ya";
+    }
   });
   render(); update();
 })();
