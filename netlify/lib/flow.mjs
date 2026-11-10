@@ -3,8 +3,10 @@ import crypto from "node:crypto";
 // Variables de entorno (se configuran en Netlify, nunca en el código):
 //   FLOW_API_KEY, FLOW_SECRET_KEY
 //   FLOW_ENV = "sandbox" (pruebas) o "production"
+const env = (k) => (process.env[k] || "").trim();
+
 export const FLOW_BASE =
-  process.env.FLOW_ENV === "production"
+  env("FLOW_ENV").toLowerCase() === "production"
     ? "https://www.flow.cl/api"
     : "https://sandbox.flow.cl/api";
 
@@ -22,13 +24,13 @@ function firmar(params) {
     .map((k) => k + params[k])
     .join("");
   return crypto
-    .createHmac("sha256", process.env.FLOW_SECRET_KEY)
+    .createHmac("sha256", env("FLOW_SECRET_KEY"))
     .update(cadena)
     .digest("hex");
 }
 
 export async function flowPost(ruta, datos) {
-  const params = { apiKey: process.env.FLOW_API_KEY, ...datos };
+  const params = { apiKey: env("FLOW_API_KEY"), ...datos };
   params.s = firmar(params);
   const r = await fetch(`${FLOW_BASE}/${ruta}`, {
     method: "POST",
@@ -41,7 +43,7 @@ export async function flowPost(ruta, datos) {
 }
 
 export async function flowGet(ruta, datos) {
-  const params = { apiKey: process.env.FLOW_API_KEY, ...datos };
+  const params = { apiKey: env("FLOW_API_KEY"), ...datos };
   params.s = firmar(params);
   const r = await fetch(`${FLOW_BASE}/${ruta}?${new URLSearchParams(params)}`);
   const json = await r.json();
