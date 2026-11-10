@@ -13,10 +13,14 @@ export const FLOW_BASE =
 // Catálogo de cobros. Los montos se definen AQUÍ, en el servidor,
 // para que nadie pueda cambiarlos desde el navegador.
 export const CATALOGO = {
-  "preboda":       { nombre: "Pre-boda (2 horas)",                monto: 120000 },
-  "matrimonio-ii": { nombre: "Matrimonio II (media jornada)",     monto: 400000 },
-  "matrimonio-i":  { nombre: "Matrimonio I (todo el día)",        monto: 600000 },
+  "preboda":       { nombre: "Pre-boda (2 horas)",            monto: 120000 },
+  "matrimonio-ii": { nombre: "Matrimonio II (media jornada)", monto: 400000 },
+  "matrimonio-i":  { nombre: "Matrimonio I (todo el día)",    monto: 600000 },
 };
+// Nombres que usa la agenda del sitio (index.html)
+export const ALIAS = { basica: "preboda", esencial: "matrimonio-ii", experiencia: "matrimonio-i" };
+// Porcentaje que se paga como abono al reservar desde la agenda
+export const ABONO_PCT = 50;
 
 function firmar(params) {
   const cadena = Object.keys(params)
