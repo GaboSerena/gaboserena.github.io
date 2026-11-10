@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagar · Serena Visuales</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+  :root{--bg:#f3f1ec;--bg-2:#e7e6df;--ink:#1d2725;--ink-2:#4d5a57;--line:#cfd2cb;--sea:#2c625e;--sea-ink:#f3f1ec;--ok:#2c625e;--bad:#8a2d1f;
+    --display:"Bodoni Moda","Didot","Times New Roman",serif;--body:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+  main{width:100%;max-width:460px}
+  .logo{display:block;margin:0 auto 24px;height:56px}
+  h1{font:400 34px/1.15 var(--display);margin:0 0 6px;text-align:center}
+  .lead{color:var(--ink-2);text-align:center;margin:0 0 28px}
+  form{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+  label.t{display:block;font-weight:600;font-size:14px;margin:0 0 8px}
+  .opts{display:grid;gap:8px;margin-bottom:18px}
+  .opts label{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer}
+  .opts input{accent-color:var(--sea);margin-right:8px}
+  .opts label:has(input:checked){border-color:var(--sea);background:var(--bg)}
+  .opts b{font-weight:500}.opts span.p{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+  input[type=text],input[type=email]{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:16px;background:#fff;color:var(--ink)}
+  button{width:100%;font:600 16px var(--body);background:var(--sea);color:var(--sea-ink);border:0;border-radius:999px;padding:14px;cursor:pointer}
+  button:disabled{opacity:.6;cursor:wait}
+  .small{font-size:13px;color:var(--ink-2);text-align:center;margin:14px 0 0}
+  .msg{border-radius:12px;padding:18px;text-align:center;margin-bottom:20px;background:#fff;border:1px solid var(--line)}
+  .msg.ok{border-color:var(--ok)}.msg.bad{border-color:var(--bad)}
+  .msg h2{font:400 26px var(--display);margin:0 0 6px}
+  .err{color:var(--bad);font-size:14px;margin:0 0 12px;min-height:1em}
+  a{color:var(--sea)}
+</style>
+</head>
+<body>
+<main>
+  <a href="/"><img class="logo" src="logo.png" alt="Serena Visuales"></a>
+  <div id="resultado"></div>
+  <h1>Pagar cobertura</h1>
+  <p class="lead">Pago seguro con Flow: tarjetas, Webpay y transferencia.</p>
+  <form id="f">
+    <label class="t">Cobertura</label>
+    <div class="opts">
+      <label><span><input type="radio" name="item" value="preboda"><b>Pre-boda</b></span><span class="p">$120.000</span></label>
+      <label><span><input type="radio" name="item" value="matrimonio-ii"><b>Matrimonio II</b></span><span class="p">$400.000</span></label>
+      <label><span><input type="radio" name="item" value="matrimonio-i" checked><b>Matrimonio I</b></span><span class="p">$600.000</span></label>
+    </div>
+    <label class="t" for="nombre">Nombres de los novios</label>
+    <input type="text" id="nombre" autocomplete="name" required>
+    <label class="t" for="email">Correo (para el comprobante)</label>
+    <input type="email" id="email" autocomplete="email" required>
+    <p class="err" id="err"></p>
+    <button id="btn">Ir a pagar</button>
+    <p class="small">Serás redirigido a Flow para completar el pago.</p>
+  </form>
+  <p class="small"><a href="/">← Volver al sitio</a></p>
+</main>
+<script>
+  const r = new URLSearchParams(location.search).get("r");
+  const msgs = {
+    ok: ["ok", "¡Pago recibido!", "Gracias. Te escribo por WhatsApp para coordinar los detalles."],
+    pendiente: ["", "Pago pendiente", "Flow aún está procesando el pago. Te avisaré cuando se confirme."],
+    rechazado: ["bad", "Pago rechazado", "No se realizó ningún cargo. Puedes intentar de nuevo."],
+    anulado: ["bad", "Pago anulado", "El pago fue cancelado. Puedes intentar de nuevo."],
+    error: ["bad", "No pudimos verificar el pago", "Escríbeme por WhatsApp y lo revisamos."],
+  };
+  if (r && msgs[r]) {
+    const [c, t, d] = msgs[r];
+    document.getElementById("resultado").innerHTML = `<div class="msg ${c}"><h2>${t}</h2><p>${d}</p></div>`;
+  }
+  const q = new URLSearchParams(location.search).get("item");
+  if (q) { const el = document.querySelector(`input[value="${CSS.escape(q)}"]`); if (el) el.checked = true; }
+
+  document.getElementById("f").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = document.getElementById("err"), btn = document.getElementById("btn");
+    err.textContent = ""; btn.disabled = true; btn.textContent = "Conectando con Flow…";
+    try {
+      const res = await fetch("/.netlify/functions/flow-crear", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          item: document.querySelector("input[name=item]:checked").value,
+          nombre: document.getElementById("nombre").value.trim(),
+          email: document.getElementById("email").value.trim(),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || "Error");
+      location.href = data.url;
+    } catch (x) {
+      err.textContent = x.message || "No se pudo iniciar el pago.";
+      btn.disabled = false; btn.textContent = "Ir a pagar";
+    }
+  });
+</script>
+</body>
+</html>
