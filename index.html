@@ -631,6 +631,186 @@ html.sb .btn:focus-visible,html.sb button:focus-visible{outline-color:var(--ink)
 
 html,body{margin:0}
 .picker,.tint{display:none!important}
+
+/* ===== Agenda (nov-2026): reserva guiada en 4 pasos con resumen siempre visible ===== */
+.agenda{background:var(--bg-2);--ag-ok:#2f6b4f;--ag-ok-bg:color-mix(in srgb,#2f6b4f 9%,var(--bg));--ag-card:var(--bg);--ag-r:16px}
+.ag{scroll-margin-top:96px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
+.ag-main{background:var(--ag-card);border:1px solid var(--line);border-radius:var(--ag-r);padding:28px;min-width:0;box-shadow:0 24px 50px -36px rgba(20,20,20,.35)}
+
+/* Pasos */
+.ag-steps{list-style:none;margin:0 0 28px;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;counter-reset:s}
+.ag-steps button{all:unset;box-sizing:border-box;width:100%;display:flex;gap:10px;align-items:center;padding:10px 10px 12px;border-bottom:2px solid var(--line);cursor:pointer;color:var(--ink-2);transition:border-color .25s,color .25s}
+.ag-steps button:disabled{cursor:default}
+.ag-steps button:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:6px}
+.ag-steps i{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 .82rem var(--body);font-style:normal;border:1px solid var(--line);background:var(--bg);transition:all .25s}
+.ag-steps span{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.ag-steps b{font:600 .88rem var(--body);color:inherit}
+.ag-steps small{font-size:.74rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink-2)}
+.ag-steps [aria-current="step"]{border-color:var(--ink);color:var(--ink)}
+.ag-steps [aria-current="step"] i{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.ag-steps .done{color:var(--ink);border-color:var(--ag-ok)}
+.ag-steps .done i{background:var(--ag-ok);border-color:var(--ag-ok);color:#fff;font-size:0}
+.ag-steps .done i::before{content:"✓";font-size:.85rem}
+
+.ag-panel{animation:agIn .35s ease both}
+@keyframes agIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ag-ph{margin-bottom:20px}
+.ag-ph h3:focus{outline:none}
+.ag-ph h3{font-family:var(--display);font-weight:400;font-size:clamp(1.45rem,2.6vw,1.9rem);line-height:1.15;margin:0 0 6px}
+.ag-ph p{margin:0;color:var(--ink-2);font-size:.98rem}
+
+/* Meses (atajos) */
+.ag-months{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 10px;margin:0 -2px 12px;scrollbar-width:thin;scroll-snap-type:x proximity}
+.ag-months button{flex:none;scroll-snap-align:start;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:.45em .95em;font:500 .82rem var(--body);cursor:pointer;text-transform:capitalize;transition:all .2s}
+.ag-months button small{color:var(--ink-2);font-size:.72rem;margin-left:4px}
+.ag-months button:hover{border-color:var(--ink)}
+.ag-months button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ag-months button[aria-selected="true"] small{color:color-mix(in srgb,var(--bg) 70%,transparent)}
+
+/* Calendario */
+.ag-cal{border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;background:var(--bg)}
+.ag-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ag-cal-head h4{margin:0;font-family:var(--display);font-weight:400;font-size:1.45rem;text-transform:capitalize}
+.ag-nav{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);font:400 1.3rem/1 var(--body);cursor:pointer;transition:all .2s}
+.ag-nav:not([disabled]):hover{border-color:var(--ink);background:var(--bg-2)}
+.ag-nav[disabled]{opacity:.25;cursor:default}
+.ag-dow,.ag-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.ag-dow span{text-align:center;font-size:.72rem;font-weight:600;color:var(--ink-2);padding-bottom:6px;letter-spacing:.02em}
+.ag-dow span:nth-child(n+6){color:var(--ink)}
+.ag-days button{min-width:0;padding:0;position:relative;width:100%;height:clamp(42px,9vw,64px);border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:500 1rem var(--body);font-variant-numeric:tabular-nums;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s,transform .15s,color .15s}
+.ag-days button.free:hover{border-color:var(--ink);transform:translateY(-1px);background:var(--ag-ok-bg)}
+.ag-days button.free::after{content:"";position:absolute;bottom:7px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--ag-ok)}
+.ag-days button.wknd{font-weight:700}
+.ag-days button.today{box-shadow:inset 0 0 0 1px var(--ink-2)}
+.ag-days button.today::before{content:"hoy";position:absolute;top:3px;left:0;right:0;font-size:.55rem;font-weight:600;letter-spacing:.04em;color:var(--ink-2);text-transform:uppercase}
+.ag-days button.past{border-color:transparent;background:transparent;color:var(--ink-2);opacity:.38;cursor:default}
+.ag-days button.full{cursor:not-allowed;color:var(--ink-2);border-style:dashed;background:repeating-linear-gradient(-45deg,transparent 0 5px,color-mix(in srgb,var(--ink) 7%,transparent) 5px 6px);text-decoration:line-through;text-decoration-thickness:1px}
+.ag-days button.full::after{content:"Reservada";position:absolute;bottom:3px;left:0;right:0;font-size:.52rem;font-weight:600;text-decoration:none;letter-spacing:.02em}
+.ag-days button.sel{background:var(--ink);border-color:var(--ink);color:var(--bg);transform:scale(1.04);box-shadow:0 8px 18px -8px rgba(0,0,0,.5)}
+.ag-days button.sel::after{background:var(--bg)}
+.ag-days button.sel.today::before{color:var(--bg)}
+.ag-days button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.ag-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:.8rem;color:var(--ink-2)}
+.ag-legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:1px solid var(--line)}
+.ag-legend .lg-free{background:var(--bg);position:relative}
+.ag-legend .lg-free::after{content:"";position:absolute;left:50%;bottom:2px;width:3px;height:3px;margin-left:-1.5px;border-radius:50%;background:var(--ag-ok)}
+.ag-legend .lg-full{border-style:dashed;background:repeating-linear-gradient(-45deg,transparent 0 3px,color-mix(in srgb,var(--ink) 18%,transparent) 3px 4px)}
+.ag-legend .lg-sel{background:var(--ink);border-color:var(--ink)}
+
+.ag-pick{display:flex;gap:12px;align-items:center;margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--ag-ok-bg);border:1px solid color-mix(in srgb,var(--ag-ok) 35%,transparent);animation:agIn .3s ease both}
+.ag-ok{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ag-ok);color:#fff;display:grid;place-items:center;font-weight:700}
+.ag-pick b{display:block;font-weight:600}
+.ag-pick b::first-letter{text-transform:uppercase}
+.ag-pick small{color:var(--ink-2);font-size:.85rem}
+
+/* Acciones */
+.ag-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+.ag-actions .ag-next{margin-left:auto;padding:.9em 1.6em}
+.ag-next[disabled]{opacity:.4;cursor:not-allowed;transform:none!important}
+.ag-back{border:0;background:none;color:var(--ink-2);font:500 .9rem var(--body);cursor:pointer;padding:.6em 0}
+.ag-back:hover{color:var(--ink)}
+.ag-actions-solo{margin-top:6px}
+
+/* Coberturas */
+.ag-packs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ag-pack{position:relative;display:flex;flex-direction:column;gap:4px;padding:18px 16px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg);cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}
+.ag-pack:hover{border-color:var(--ink);transform:translateY(-2px)}
+.ag-pack input{position:absolute;opacity:0;pointer-events:none}
+.ag-pack::before{content:"";position:absolute;top:16px;right:14px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg);transition:all .2s}
+.ag-pack:has(input:checked){border-color:var(--ink);box-shadow:0 0 0 1px var(--ink),0 18px 34px -24px rgba(0,0,0,.5)}
+.ag-pack:has(input:checked)::before{border-color:var(--ink);background:var(--ink);box-shadow:inset 0 0 0 4px var(--bg)}
+.ag-pack:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:3px}
+.ag-pack-top{display:flex;flex-direction:column;gap:6px;padding-right:28px}
+.ag-pack-top b{font-family:var(--display);font-weight:400;font-size:1.3rem;line-height:1.1}
+.ag-badge{align-self:flex-start;font-style:normal;font-size:.68rem;font-weight:600;letter-spacing:.03em;padding:.25em .6em;border-radius:999px;background:var(--ink);color:var(--bg)}
+.ag-pack-time{font-size:.8rem;color:var(--ink-2)}
+.ag-pack-price{font-family:var(--display);font-size:1.9rem;line-height:1.1;margin-top:8px;font-variant-numeric:lining-nums tabular-nums}
+.ag-pack-ab{font-size:.82rem;color:var(--ag-ok);font-weight:500}
+.ag-pack ul{list-style:none;margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;font-size:.84rem;color:var(--ink-2)}
+.ag-pack li{padding-left:18px;position:relative}
+.ag-pack li::before{content:"✓";position:absolute;left:0;color:var(--ink);font-size:.8rem}
+
+/* Datos */
+.ag-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+.ag-wide{grid-column:1/-1}
+.ag-f{display:flex;flex-direction:column;gap:7px;min-width:0}
+.ag-f>label,.ag-lbl{font:600 .84rem var(--body);color:var(--ink)}
+.ag-f>label span{color:#a3402f}
+.ag-f input,.ag-f select{font:400 1rem var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.75em .9em;width:100%;box-sizing:border-box;transition:border-color .2s,box-shadow .2s}
+.ag-f select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 17px) 55%,calc(100% - 12px) 55%;background-size:5px 5px;background-repeat:no-repeat;padding-right:34px;cursor:pointer}
+.ag-f input::placeholder{color:color-mix(in srgb,var(--ink-2) 75%,transparent)}
+.ag-f input:focus,.ag-f select:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 10%,transparent)}
+.ag-f input[aria-invalid="true"]{border-color:#a3402f;box-shadow:0 0 0 3px color-mix(in srgb,#a3402f 12%,transparent)}
+.ag-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ag-chips label{cursor:pointer}
+.ag-chips input{position:absolute;opacity:0;pointer-events:none}
+.ag-chips span{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.55em 1.05em;font:500 .88rem var(--body);background:var(--bg);transition:all .2s}
+.ag-chips label:hover span{border-color:var(--ink)}
+.ag-chips input:checked+span{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ag-chips input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
+.ag-err{margin:16px 0 0;padding:12px 14px;border-radius:10px;background:color-mix(in srgb,#a3402f 9%,var(--bg));color:#7d2c1f;border:1px solid color-mix(in srgb,#a3402f 30%,transparent);font-size:.9rem}
+.ag-fine{margin:14px 0 0;font-size:.78rem;color:var(--ink-2)}
+
+/* Revisión */
+.ag-review{margin:0 0 20px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.ag-review div{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:baseline;padding:13px 16px;border-top:1px solid var(--line)}
+.ag-review div:first-child{border-top:0}
+.ag-review dt{font-size:.8rem;color:var(--ink-2)}
+.ag-review dd{margin:0;font-weight:500;min-width:0}
+.ag-review dd::first-letter{text-transform:uppercase}
+.ag-review button{border:0;background:none;color:var(--ink-2);font:500 .8rem var(--body);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.ag-review button:hover{color:var(--ink)}
+.ag-after{list-style:none;margin:0 0 22px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;counter-reset:a}
+.ag-after li{counter-increment:a;padding:14px;border-radius:12px;background:var(--bg-2);display:flex;flex-direction:column;gap:4px;font-size:.84rem}
+.ag-after li::before{content:counter(a);width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:.72rem;font-weight:700;margin-bottom:4px}
+.ag-after b{font-weight:600;font-size:.9rem}
+.ag-after span{color:var(--ink-2);line-height:1.45}
+.ag-pay,.ag-talk{width:100%;justify-content:center;padding:1.05em 1.3em;font-size:1rem}
+.ag-pay{box-shadow:0 14px 28px -16px rgba(0,0,0,.6)}
+.ag-pay[disabled]{opacity:.6;cursor:wait}
+.ag-talk{margin-top:10px}
+
+/* Resumen lateral */
+.ag-side{position:sticky;top:96px;background:var(--ink);color:var(--bg);border-radius:var(--ag-r);padding:22px;display:flex;flex-direction:column;gap:10px}
+.ag-side-k{margin:0 0 4px;font-family:var(--display);font-style:italic;font-size:1.35rem}
+.ag-side-row{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;align-items:baseline}
+.ag-side-row span{color:color-mix(in srgb,var(--bg) 62%,transparent)}
+.ag-side-row b{font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.ag-side-row b::first-letter{text-transform:uppercase}
+.ag-side-big{margin-top:6px;padding:14px 0;border-top:1px dashed color-mix(in srgb,var(--bg) 25%,transparent);border-bottom:1px dashed color-mix(in srgb,var(--bg) 25%,transparent);display:flex;flex-direction:column;gap:2px}
+.ag-side-big span{font-size:.8rem;color:color-mix(in srgb,var(--bg) 70%,transparent)}
+.ag-side-big b{font-family:var(--display);font-weight:400;font-size:2.3rem;line-height:1.05;font-variant-numeric:lining-nums tabular-nums}
+.ag-muted{font-size:.8rem}
+.ag-trust{list-style:none;margin:8px 0 4px;padding:0;display:flex;flex-direction:column;gap:6px;font-size:.8rem;color:color-mix(in srgb,var(--bg) 78%,transparent)}
+.ag-trust li{padding-left:20px;position:relative}
+.ag-trust li::before{content:"✓";position:absolute;left:0;color:#8fd3ae}
+.ag-wa{margin-top:6px;border:1px solid color-mix(in srgb,var(--bg) 30%,transparent);background:transparent;color:var(--bg);border-radius:999px;padding:.75em 1em;font:500 .86rem var(--body);cursor:pointer;transition:background .2s}
+.ag-wa:hover{background:color-mix(in srgb,var(--bg) 10%,transparent)}
+
+@media (max-width:900px){
+  .ag{grid-template-columns:1fr}
+  .ag-side{position:static;order:2}
+  .ag-packs{grid-template-columns:1fr}
+  .ag-after{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .ag-main{padding:18px 14px;border-radius:14px}
+  .ag-steps{gap:4px;margin-bottom:22px}
+  .ag-steps button{flex-direction:column;align-items:flex-start;gap:6px;padding:6px 2px 10px}
+  .ag-steps small{display:none}
+  .ag-steps b{font-size:.76rem}
+  .ag-cal{padding:12px 8px 12px;border-radius:12px}
+  .ag-dow,.ag-days{gap:4px}
+  .ag-days button{height:44px;border-radius:8px;font-size:.92rem}
+  .ag-days button.free::after{bottom:5px}
+  .ag-days button.full::after{content:"";}
+  .ag-days button.today::before{font-size:.5rem;top:2px}
+  .ag-fields{grid-template-columns:1fr}
+  .ag-review div{grid-template-columns:1fr auto;gap:2px 10px}
+  .ag-review dt{grid-column:1/-1}
+  .ag-actions .ag-next{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){.ag-panel,.ag-pick{animation:none}.ag-days button,.ag-pack{transition:none}}
 </style>
 </head>
 <body>
@@ -815,97 +995,186 @@ html,body{margin:0}
   </div>
 </section>
 
-<section class="book vx" id="agenda">
+<section class="agenda" id="agenda">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow">Fechas · simulación</span>
-      <h2>Consulten si su fecha está libre.</h2>
-      <p class="lead">Las fechas de temporada se toman con meses de anticipación. Elijan su fecha y resérvenla con un abono del 50%, o escríbanme si prefieren conversar primero.</p>
-      <div class="styletog" role="group" aria-label="Estilo de la agenda (prototipo)"><button type="button" data-st="vx" aria-pressed="true">Minimal</button><button type="button" data-st="" aria-pressed="false">Editorial</button></div>
+      <span class="eyebrow">Agenda 2026 – 2027</span>
+      <h2>Reserven su fecha en 4 pasos.</h2>
+      <p class="lead">Elijan el día, la cobertura y dejen sus datos. Pagan el 50% con Flow y la fecha queda bloqueada solo para ustedes.</p>
     </div>
-    <div class="grid">
-      <div class="cal">
-        <ol class="bsteps" id="bsteps"><li class="on"><b>01</b>Fecha</li><li><b>02</b>Cobertura</li><li><b>03</b>Sus datos</li></ol>
-        <div class="cal-head">
-          <button type="button" id="prev" aria-label="Mes anterior">‹</button>
-          <h3 id="monthLabel">diciembre 2026</h3>
-          <button type="button" id="next" aria-label="Mes siguiente">›</button>
+
+    <form class="ag" id="bookForm" novalidate>
+      <div class="ag-main">
+        <ol class="ag-steps" id="agSteps">
+          <li><button type="button" data-go="0" aria-current="step"><i>1</i><span><b>Fecha</b><small data-sum="fecha">Elijan un día</small></span></button></li>
+          <li><button type="button" data-go="1"><i>2</i><span><b>Cobertura</b><small data-sum="pack">Matrimonio I</small></span></button></li>
+          <li><button type="button" data-go="2"><i>3</i><span><b>Sus datos</b><small data-sum="datos">Nombres y contacto</small></span></button></li>
+          <li><button type="button" data-go="3"><i>4</i><span><b>Reservar</b><small>Abono 50%</small></span></button></li>
+        </ol>
+
+        <!-- Paso 1: fecha -->
+        <div class="ag-panel" data-step="0">
+          <div class="ag-ph">
+            <h3>¿Cuándo se casan?</h3>
+            <p>Toquen el día de su matrimonio. Todas las fechas en blanco están disponibles.</p>
+          </div>
+          <div class="ag-months" id="agMonths" role="tablist" aria-label="Meses"></div>
+          <div class="ag-cal">
+            <div class="ag-cal-head">
+              <button type="button" class="ag-nav" id="agPrev" aria-label="Mes anterior">‹</button>
+              <h4 id="agMonthLabel" aria-live="polite">noviembre 2026</h4>
+              <button type="button" class="ag-nav" id="agNext" aria-label="Mes siguiente">›</button>
+            </div>
+            <div class="ag-dow" aria-hidden="true"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
+            <div class="ag-days" id="agDays"></div>
+            <div class="ag-legend">
+              <span><i class="lg-free"></i>Disponible</span>
+              <span><i class="lg-full"></i>Reservada</span>
+              <span><i class="lg-sel"></i>Su fecha</span>
+            </div>
+          </div>
+          <div class="ag-pick" id="agPick" hidden>
+            <span class="ag-ok" aria-hidden="true">✓</span>
+            <div><b id="agPickDate">sábado 16 de enero de 2027</b><small>¡Está disponible! Sigan para elegir su cobertura.</small></div>
+          </div>
+          <div class="ag-actions">
+            <button type="button" class="btn ag-next" data-next="1" id="agNext1" disabled>Elijan un día para continuar</button>
+          </div>
         </div>
-        <div class="dow"><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span></div>
-        <div class="days" id="days"></div>
-        <div class="legend"><span><i style="background:var(--dune)"></i>Disponible</span><span><i style="background:var(--line)"></i>Reservada</span></div>
-        <div id="slotWrap" hidden>
-          <p class="eyebrow" style="margin-top:20px" id="slotLabel">Horarios</p>
-          <div class="slots" id="slots"></div>
+
+        <!-- Paso 2: cobertura -->
+        <div class="ag-panel" data-step="1" hidden>
+          <div class="ag-ph">
+            <h3>¿Qué cobertura quieren?</h3>
+            <p>Hoy pagan solo el 50% para reservar. El resto, antes del matrimonio.</p>
+          </div>
+          <div class="ag-packs">
+            <label class="ag-pack">
+              <input type="radio" name="pack" id="p-ex" value="experiencia" checked>
+              <span class="ag-pack-top"><b>Matrimonio I</b><em class="ag-badge">La más elegida</em></span>
+              <span class="ag-pack-time">Todo el día · hasta 12 horas</span>
+              <span class="ag-pack-price">$600.000</span>
+              <span class="ag-pack-ab">Reservan con <b>$300.000</b></span>
+              <ul><li>Más de 600 fotos digitales</li><li>20 fotos impresas A5</li><li>Sesión de novios de 1 h 30</li><li>Civil y galería de invitados de regalo</li></ul>
+            </label>
+            <label class="ag-pack">
+              <input type="radio" name="pack" id="p-es" value="esencial">
+              <span class="ag-pack-top"><b>Matrimonio II</b></span>
+              <span class="ag-pack-time">Media jornada · 6 horas</span>
+              <span class="ag-pack-price">$400.000</span>
+              <span class="ag-pack-ab">Reservan con <b>$200.000</b></span>
+              <ul><li>400 fotos digitales</li><li>10 fotos impresas A5</li><li>Sesión de novios de 1 hora</li></ul>
+            </label>
+            <label class="ag-pack">
+              <input type="radio" name="pack" id="p-ba" value="basica">
+              <span class="ag-pack-top"><b>Pre-boda</b></span>
+              <span class="ag-pack-time">Sesión de 2 horas</span>
+              <span class="ag-pack-price">$120.000</span>
+              <span class="ag-pack-ab">Reservan con <b>$60.000</b></span>
+              <ul><li>50 fotos digitales</li><li>Entrega express</li><li>Ideal para el save the date</li></ul>
+            </label>
+          </div>
+          <div class="ag-actions">
+            <button type="button" class="ag-back" data-next="0">← Cambiar fecha</button>
+            <button type="button" class="btn ag-next" data-next="2">Continuar</button>
+          </div>
+        </div>
+
+        <!-- Paso 3: datos -->
+        <div class="ag-panel" data-step="2" hidden>
+          <div class="ag-ph">
+            <h3>Cuéntenme de ustedes</h3>
+            <p>Con esto preparo su contrato y les envío el comprobante.</p>
+          </div>
+          <div class="ag-fields">
+            <div class="ag-f ag-wide">
+              <label for="nombre">Nombres de los novios <span>*</span></label>
+              <input id="nombre" name="nombre" autocomplete="name" placeholder="Ej.: Camila y Diego" required>
+            </div>
+            <div class="ag-f">
+              <label for="email">Correo <span>*</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="para el comprobante" required>
+            </div>
+            <div class="ag-f">
+              <label for="tel">WhatsApp <span>*</span></label>
+              <input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="+56 9 1234 5678" required>
+            </div>
+            <div class="ag-f ag-wide">
+              <span class="ag-lbl">Tipo de ceremonia</span>
+              <div class="ag-chips">
+                <label><input type="radio" name="tipo" value="Civil y fiesta" checked><span>Civil y fiesta</span></label>
+                <label><input type="radio" name="tipo" value="Religiosa"><span>Religiosa</span></label>
+                <label><input type="radio" name="tipo" value="Simbólica"><span>Simbólica</span></label>
+                <label><input type="radio" name="tipo" value="Solo civil"><span>Solo civil</span></label>
+              </div>
+            </div>
+            <div class="ag-f ag-wide">
+              <label for="lugarTxt">Lugar de la celebración</label>
+              <input id="lugarTxt" name="lugarTxt" placeholder="Centro de eventos, viña, playa, parcela… (si ya lo tienen)">
+            </div>
+            <div class="ag-f">
+              <label for="comuna">Comuna</label>
+              <select id="comuna" name="comuna"><option>La Serena</option><option>Coquimbo</option><option>Valle de Elqui</option><option>Ovalle y Limarí</option><option>Otra región (con traslado)</option></select>
+            </div>
+            <div class="ag-f">
+              <label for="inv">Invitados</label>
+              <select id="inv" name="inv"><option>Menos de 50</option><option selected>50 a 100</option><option>100 a 150</option><option>Más de 150</option></select>
+            </div>
+            <div class="ag-f ag-wide">
+              <label for="fuente">¿Cómo me conocieron?</label>
+              <select id="fuente" name="fuente"><option>Instagram</option><option>Recomendación de otra pareja</option><option>Centro de eventos o wedding planner</option><option>Google</option><option>Otro</option></select>
+            </div>
+          </div>
+          <p class="ag-err" id="agErr" role="alert" hidden></p>
+          <p class="ag-fine">Solo uso sus datos para su reserva. No los comparto ni los uso para publicidad.</p>
+          <div class="ag-actions">
+            <button type="button" class="ag-back" data-next="1">← Cobertura</button>
+            <button type="button" class="btn ag-next" data-next="3">Revisar mi reserva</button>
+          </div>
+        </div>
+
+        <!-- Paso 4: confirmar y pagar -->
+        <div class="ag-panel" data-step="3" hidden>
+          <div class="ag-ph">
+            <h3>Todo listo, <span id="agHi">revisemos</span></h3>
+            <p>Confirmen que esté todo bien antes de pagar.</p>
+          </div>
+          <dl class="ag-review">
+            <div><dt>Fecha</dt><dd id="rvFecha">—</dd><button type="button" data-go="0">Cambiar</button></div>
+            <div><dt>Cobertura</dt><dd id="rvPack">—</dd><button type="button" data-go="1">Cambiar</button></div>
+            <div><dt>Novios</dt><dd id="rvNovios">—</dd><button type="button" data-go="2">Cambiar</button></div>
+            <div><dt>Celebración</dt><dd id="rvLugar">—</dd><button type="button" data-go="2">Cambiar</button></div>
+          </dl>
+          <ol class="ag-after">
+            <li><b>Pagan el abono con Flow</b><span>Webpay, tarjetas o transferencia. Seguro y en pesos.</span></li>
+            <li><b>Su fecha queda bloqueada</b><span>Les llega el comprobante al correo al instante.</span></li>
+            <li><b>Les escribo en menos de 24 h</b><span>Por WhatsApp, para el contrato y los detalles. El saldo se paga antes del matrimonio.</span></li>
+          </ol>
+          <button class="btn ag-pay" type="submit" id="payBtn">Quiero reservar ya · pagar $300.000</button>
+          <button class="btn ghost ag-talk" type="button" id="talkBtn">Tengo dudas, ¿conversamos?</button>
+          <p class="ag-err" id="result" role="alert" hidden></p>
+          <div class="ag-actions ag-actions-solo">
+            <button type="button" class="ag-back" data-next="2">← Sus datos</button>
+          </div>
         </div>
       </div>
 
-      <form class="form" id="bookForm" novalidate>
-        <div class="field">
-          <label>Cobertura</label>
-          <div class="choice packs3">
-            <label><input type="radio" name="pack" id="p-ba" value="basica"><span><b>Pre-boda</b><i>2 horas</i></span></label>
-            <label><input type="radio" name="pack" id="p-es" value="esencial"><span><b>Matrimonio II</b><i>6 horas</i></span></label>
-            <label><input type="radio" name="pack" id="p-ex" value="experiencia" checked><span><b>Matrimonio I</b><i>Hasta 12 h</i></span></label>
-          </div>
-        </div>
-        <div class="field">
-          <label>Ceremonia</label>
-          <div class="choice">
-            <label><input type="radio" name="tipo" value="Civil y fiesta" checked><span>Civil y fiesta</span></label>
-            <label><input type="radio" name="tipo" value="Religiosa"><span>Religiosa</span></label>
-            <label><input type="radio" name="tipo" value="Simbólica"><span>Simbólica</span></label>
-            <label><input type="radio" name="tipo" value="Solo civil"><span>Solo civil</span></label>
-          </div>
-        </div>
-        <div class="duo">
-          <div class="field">
-            <label for="nombre">Nombres de los novios</label>
-            <input id="nombre" name="nombre" autocomplete="name" value="" placeholder="Sus nombres">
-          </div>
-          <div class="field">
-            <label for="tel">WhatsApp</label>
-            <input id="tel" name="tel" inputmode="tel" value="+56 9 1234 5678">
-          </div>
-        </div>
-        <div class="field">
-          <label for="email">Correo</label>
-          <input id="email" name="email" type="email" autocomplete="email" placeholder="Para enviarles el comprobante de pago">
-        </div>
-        <div class="field">
-          <label for="lugarTxt">Lugar de la celebración</label>
-          <input id="lugarTxt" name="lugarTxt" placeholder="Centro de eventos, viña, playa, parcela…">
-        </div>
-        <div class="duo">
-          <div class="field">
-            <label for="comuna">Comuna</label>
-            <select id="comuna" name="comuna"><option>La Serena</option><option>Coquimbo</option><option>Valle de Elqui</option><option>Ovalle y Limarí</option><option>Otra región (con traslado)</option></select>
-          </div>
-          <div class="field">
-            <label for="inv">Invitados</label>
-            <select id="inv" name="inv"><option>Menos de 50</option><option selected>50 a 100</option><option>100 a 150</option><option>Más de 150</option></select>
-          </div>
-        </div>
-        <div class="field">
-          <label for="fuente">¿Cómo nos conocieron?</label>
-          <select id="fuente" name="fuente"><option>Instagram</option><option>Recomendación de otra pareja</option><option>Centro de eventos o wedding planner</option><option>Google</option><option>Otro</option></select>
-          <small>Solo usamos sus datos para responder esta consulta. No los compartimos ni los usamos para publicidad.</small>
-        </div>
-        <div class="summary" id="summary">
-          <div class="tk"><span>Su consulta</span><b>Serena Visuales</b></div>
-          <div class="line"><span>Fecha</span><span id="sFecha">Elijan un día en el calendario</span></div>
-          <div class="line"><span>Cobertura</span><span id="sPack">Matrimonio I</span></div>
-          <div class="line"><span>Lugar</span><span id="sLugar">La Serena</span></div>
-          <div class="line"><span>Respuesta</span><span>en menos de 24 h</span></div>
-          <div class="line total"><span>Inversión</span><span id="sTotal">$600.000</span></div>
-          <div class="line"><span>Abono para reservar (50%)</span><span id="sAbono">$300.000</span></div>
-        </div>
-        <button class="btn" type="submit" id="payBtn" disabled>Elijan su fecha</button>
-        <button class="btn ghost" type="button" id="talkBtn">Tengo dudas, ¿conversamos?</button>
-        <p class="secure"><span>Pago seguro con Flow</span><span aria-hidden="true">·</span><span>¿Dudas? Les respondo por WhatsApp</span></p>
-        <div class="notice" id="result" hidden></div>
-      </form>
-    </div>
+      <!-- Resumen siempre visible -->
+      <aside class="ag-side" aria-label="Resumen de su reserva">
+        <p class="ag-side-k">Su reserva</p>
+        <div class="ag-side-row"><span>Fecha</span><b id="sFecha">Elijan un día en el calendario</b></div>
+        <div class="ag-side-row"><span>Cobertura</span><b id="sPack">Matrimonio I</b></div>
+        <div class="ag-side-row"><span>Valor total</span><b id="sTotal">$600.000</b></div>
+        <div class="ag-side-big"><span>Para reservar hoy (50%)</span><b id="sAbono">$300.000</b></div>
+        <div class="ag-side-row ag-muted"><span>Saldo antes del matrimonio</span><b id="sSaldo">$300.000</b></div>
+        <ul class="ag-trust">
+          <li>Pago seguro con Flow</li>
+          <li>Comprobante inmediato al correo</li>
+          <li>Si cambian la fecha, el abono se traspasa (según disponibilidad)</li>
+        </ul>
+        <button type="button" class="ag-wa" id="sideTalk">¿Dudas? Conversemos por WhatsApp</button>
+      </aside>
+    </form>
   </div>
 </section>
 
@@ -1087,128 +1356,177 @@ html,body{margin:0}
   const WA="56987213618";
   const ABONO=50; // % del valor que se paga al reservar (debe coincidir con netlify/lib/flow.mjs)
   const IDS={basica:"p-ba",esencial:"p-es",experiencia:"p-ex"};
-  const months=[[2026,10],[2026,11],[2027,0],[2027,1],[2027,2],[2027,3],[2027,4]]; // nov 2026 a may 2027
-  const TODAY=(()=>{const t=new Date();t.setHours(0,0,0,0);return t;})();
-  let mi=0, selDate=null;
-  const daysEl=document.getElementById("days"), label=document.getElementById("monthLabel");
-  const prev=document.getElementById("prev"), next=document.getElementById("next");
-  const slotWrap=document.getElementById("slotWrap"), slotsEl=document.getElementById("slots"), slotLabel=document.getElementById("slotLabel");
-  const payBtn=document.getElementById("payBtn"), result=document.getElementById("result");
+  // Fechas ya reservadas (AAAA-MM-DD). Agregar aquí cada reserva confirmada.
+  const BOOKED=["2026-12-12","2027-01-16"];
+  const $=id=>document.getElementById(id);
+  const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
   const nice=d=>d.toLocaleDateString("es-CL",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-  // Fechas ya tomadas (AAAA-MM-DD). Agregar aquí cada reserva confirmada.
-  const BOOKED=[];
+  const short=d=>d.toLocaleDateString("es-CL",{weekday:"short",day:"numeric",month:"short"}).replace(/\./g,"");
+  const TODAY=(()=>{const t=new Date();t.setHours(0,0,0,0);return t;})();
+  // Meses visibles: desde el mes actual hasta diciembre de 2027 (mínimo 12 meses)
+  const months=[];{let y=TODAY.getFullYear(),m=TODAY.getMonth();const endY=Math.max(2027,y+1);while(y<endY||(y===endY&&m<=11)){months.push([y,m]);m++;if(m>11){m=0;y++;}}}
+  let mi=0, selDate=null, step=0, maxStep=0;
+
+  const panels=[...document.querySelectorAll(".ag-panel")], stepBtns=[...document.querySelectorAll("#agSteps button")];
+  const daysEl=$("agDays"), monthsEl=$("agMonths"), label=$("agMonthLabel"), prev=$("agPrev"), next=$("agNext");
+  const payBtn=$("payBtn"), result=$("result"), err=$("agErr");
+  const pack=()=>document.querySelector('input[name="pack"]:checked').value;
+  const abono=()=>Math.round(PRICES[pack()]*ABONO/100);
+
   function status(d){
-    const wd=d.getDay();
-    if(d<TODAY||(wd!==5&&wd!==6)) return "off";
-    const peak=[11,0,1,2].includes(d.getMonth());
-    const seed=(d.getDate()*7+d.getMonth()*5+wd)%10;
-    const iso=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-    return BOOKED.includes(iso)?"full":"free";
+    if(d<TODAY) return "past";
+    return BOOKED.includes(iso(d))?"full":"free";
   }
   function freeIn(y,m){let n=0;const L=new Date(y,m+1,0).getDate();for(let i=1;i<=L;i++){if(status(new Date(y,m,i))==="free")n++;}return n;}
+
+  // Atajos de meses
+  months.forEach(([y,m],i)=>{
+    const b=document.createElement("button");b.type="button";b.setAttribute("role","tab");
+    const name=new Date(y,m,1).toLocaleDateString("es-CL",{month:"short"}).replace(".","");
+    b.textContent=name+(m===0||i===0||i>=12?" "+String(y).slice(2):"");
+    b.addEventListener("click",()=>{mi=i;render();});
+    monthsEl.appendChild(b);
+  });
+
   function render(){
-    const [y,m]=months[mi];
-    const first=new Date(y,m,1);
-    label.innerHTML="<em>"+first.toLocaleDateString("es-CL",{month:"long"})+"</em><span>"+y+"</span>";
+    const [y,m]=months[mi], first=new Date(y,m,1);
+    label.textContent=first.toLocaleDateString("es-CL",{month:"long",year:"numeric"}).replace(" de "," ");
     prev.disabled=mi===0; next.disabled=mi===months.length-1;
+    [...monthsEl.children].forEach((b,i)=>{b.setAttribute("aria-selected",String(i===mi));if(i===mi)b.scrollIntoView({block:"nearest",inline:"nearest"});});
     daysEl.innerHTML="";
     const lead=(first.getDay()+6)%7;
-    for(let i=0;i<lead;i++){daysEl.appendChild(document.createElement("span"));}
+    for(let i=0;i<lead;i++) daysEl.appendChild(document.createElement("span"));
     const n=new Date(y,m+1,0).getDate();
     for(let day=1;day<=n;day++){
-      const d=new Date(y,m,day), st=status(d);
+      const d=new Date(y,m,day), st=status(d), wd=d.getDay();
       const b=document.createElement("button");
       b.type="button"; b.textContent=day; b.className=st;
-      b.setAttribute("aria-label",nice(d)+(st==="free"?", disponible":st==="full"?", reservada":", sin matrimonios"));
+      if(wd===5||wd===6) b.classList.add("wknd");
+      if(+d===+TODAY) b.classList.add("today");
+      if(selDate&&+selDate===+d){b.classList.add("sel");b.setAttribute("aria-pressed","true");}
+      b.setAttribute("aria-label",nice(d)+(st==="free"?", disponible":st==="full"?", ya reservada":", fecha pasada"));
       if(st!=="free") b.disabled=true;
-      if(selDate&&+selDate===+d) b.classList.add("sel");
-      b.addEventListener("click",()=>{selDate=d;render();showDate();update();});
+      else b.addEventListener("click",()=>{selDate=d;render();update();
+        const pk=$("agPick");pk.hidden=false;$("agPickDate").textContent=nice(d);});
       daysEl.appendChild(b);
     }
   }
-  function showDate(){
-    if(!selDate){slotWrap.hidden=true;return;}
-    slotWrap.hidden=false;
-    const left=freeIn(selDate.getFullYear(),selDate.getMonth());
-    slotLabel.textContent="Su fecha";
-    slotsEl.innerHTML='<div class="datecard"><b>'+nice(selDate)+'</b><small>La reservan pagando el abono, y yo les confirmo por WhatsApp.</small><small>¿Civil entre semana? Escríbanme igual.</small></div>';
-  }
-  function pack(){return document.querySelector('input[name="pack"]:checked').value;}
-  function update(){
-    document.getElementById("sPack").textContent=NAMES[pack()];
-    document.getElementById("sTotal").textContent=fmt(PRICES[pack()]);
-    document.getElementById("sAbono").textContent=fmt(Math.round(PRICES[pack()]*ABONO/100));
-    document.getElementById("sLugar").textContent=(document.getElementById("lugarTxt").value.trim()?document.getElementById("lugarTxt").value.trim()+", ":"")+document.getElementById("comuna").value;
-    document.getElementById("sFecha").textContent=selDate?selDate.toLocaleDateString("es-CL",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):"Elijan un día en el calendario";
-    payBtn.disabled=!selDate;
-    payBtn.textContent=selDate?"Quiero reservar ya":"Elijan su fecha";
-    const st=document.querySelectorAll("#bsteps li"), stage=selDate?2:0;
-    st.forEach((li,i)=>{li.classList.toggle("done",i<stage);li.classList.toggle("on",i===stage);});
-    result.hidden=true;
-  }
   prev.addEventListener("click",()=>{if(mi>0){mi--;render();}});
   next.addEventListener("click",()=>{if(mi<months.length-1){mi++;render();}});
-  document.querySelectorAll('input[name="pack"]').forEach(r=>r.addEventListener("change",update));
-  document.getElementById("comuna").addEventListener("change",update);
-  document.getElementById("lugarTxt").addEventListener("input",update);
-  const modal=document.getElementById("askModal"); let askK="experiencia";
+
+  function lugar(){const t=$("lugarTxt").value.trim();return (t?t+", ":"")+$("comuna").value;}
+  function update(){
+    const p=pack(), tot=PRICES[p], ab=abono();
+    $("sPack").textContent=NAMES[p];
+    $("sTotal").textContent=fmt(tot);
+    $("sAbono").textContent=fmt(ab);
+    $("sSaldo").textContent=fmt(tot-ab);
+    $("sFecha").textContent=selDate?selDate.toLocaleDateString("es-CL",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).replace(/\./g,""):"Elijan un día en el calendario";
+    document.querySelector('[data-sum="fecha"]').textContent=selDate?short(selDate):"Elijan un día";
+    document.querySelector('[data-sum="pack"]').textContent=NAMES[p];
+    const nm=$("nombre").value.trim();
+    document.querySelector('[data-sum="datos"]').textContent=nm||"Nombres y contacto";
+    const n1=$("agNext1"); n1.disabled=!selDate; n1.textContent=selDate?"Continuar":"Elijan un día para continuar";
+    payBtn.textContent="Quiero reservar ya · pagar "+fmt(ab);
+    // revisión
+    $("rvFecha").textContent=selDate?nice(selDate):"—";
+    $("rvPack").textContent=NAMES[p]+" · "+fmt(tot)+" (abono "+fmt(ab)+")";
+    $("rvNovios").textContent=nm?(nm+" · "+$("email").value.trim()+" · "+$("tel").value.trim()):"—";
+    const tipo=document.querySelector('input[name="tipo"]:checked').value;
+    $("rvLugar").textContent=tipo+" · "+lugar()+" · "+$("inv").value.toLowerCase()+" invitados";
+    $("agHi").textContent=nm||"revisemos";
+  }
+
+  // Validación del paso 3
+  function validData(){
+    const checks=[["nombre",v=>v.length>=2,"Escriban sus nombres."],
+      ["email",v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),"Revisen el correo: ahí les llega el comprobante."],
+      ["tel",v=>v.replace(/\D/g,"").length>=8,"Escriban su WhatsApp para coordinar."]];
+    let bad=null;
+    checks.forEach(([id,ok,msg])=>{const el=$(id),good=ok(el.value.trim());el.setAttribute("aria-invalid",String(!good));if(!good&&!bad)bad=[el,msg];});
+    if(bad){err.hidden=false;err.textContent=bad[1];bad[0].focus();return false;}
+    err.hidden=true;return true;
+  }
+  ["nombre","email","tel"].forEach(id=>$(id).addEventListener("input",()=>{$(id).removeAttribute("aria-invalid");update();}));
+
+  function canReach(s){
+    if(s>=1&&!selDate) return 0;
+    if(s>=3&&!validData()) return 2;
+    return s;
+  }
+  function go(s,scroll=true){
+    s=canReach(s);
+    step=s; maxStep=Math.max(maxStep,s);
+    panels.forEach((p,i)=>p.hidden=i!==s);
+    stepBtns.forEach((b,i)=>{
+      if(i===s) b.setAttribute("aria-current","step"); else b.removeAttribute("aria-current");
+      const done=(i===0&&selDate)||(i===1&&maxStep>1)||(i===2&&maxStep>2&&$("nombre").value.trim());
+      b.classList.toggle("done",!!done&&i!==s);
+      b.disabled=i>maxStep&&!(i===1&&selDate);
+    });
+    result.hidden=true; update();
+    if(scroll){const top=$("bookForm").getBoundingClientRect().top;if(top<0||top>innerHeight*.5)$("bookForm").scrollIntoView({behavior:"smooth",block:"start"});}
+    if(scroll){const h=panels[s].querySelector("h3"); if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true});}}
+  }
+  document.querySelectorAll("[data-next]").forEach(b=>b.addEventListener("click",()=>go(+b.dataset.next)));
+  document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(+b.dataset.go)));
+  document.querySelectorAll('input[name="pack"],input[name="tipo"]').forEach(r=>r.addEventListener("change",update));
+  ["comuna","inv"].forEach(id=>$(id).addEventListener("change",update));
+  $("lugarTxt").addEventListener("input",update);
+
+  // Modal "Me interesa" de las coberturas
+  const modal=$("askModal"); let askK="experiencia";
   document.querySelectorAll("[data-pack]").forEach(a=>a.addEventListener("click",e=>{
-    document.getElementById(IDS[a.dataset.pack]).checked=true; update();
+    $(IDS[a.dataset.pack]).checked=true; update();
     if(a.dataset.ask){
       e.preventDefault(); askK=a.dataset.pack;
-      document.getElementById("askPack").textContent=NAMES[askK];
-      document.getElementById("askMsg").textContent="Hola Gabriel, nos casamos el [fecha] en [lugar] y nos interesa "+NAMES[askK]+" ("+fmt(PRICES[askK])+"). ¿Tienes la fecha disponible?";
-      document.getElementById("askNote").hidden=true; modal.hidden=false; document.getElementById("askGo").focus();
+      $("askPack").textContent=NAMES[askK];
+      $("askMsg").textContent="Hola Gabriel, nos casamos el [fecha] en [lugar] y nos interesa "+NAMES[askK]+" ("+fmt(PRICES[askK])+"). ¿Tienes la fecha disponible?";
+      $("askNote").hidden=true; modal.hidden=false; $("askGo").focus();
     }
   }));
   const closeAsk=()=>{modal.hidden=true;};
-  document.getElementById("askClose").addEventListener("click",closeAsk);
+  $("askClose").addEventListener("click",closeAsk);
   modal.addEventListener("click",e=>{if(e.target===modal) closeAsk();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!modal.hidden) closeAsk();});
-  document.getElementById("askGo").addEventListener("click",()=>{window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(document.getElementById("askMsg").textContent),"_blank","noopener");});
-  document.getElementById("askDate").addEventListener("click",()=>{closeAsk();document.getElementById("agenda").scrollIntoView();});
-  const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-  function details(){
-    const tipo=document.querySelector('input[name="tipo"]:checked').value;
-    return {tipo, lugar:document.getElementById("sLugar").textContent, inv:document.getElementById("inv").value, fuente:document.getElementById("fuente").value,
-      nombre:document.getElementById("nombre").value.trim(), tel:document.getElementById("tel").value.trim()};
-  }
-  function show(html,bad){result.hidden=false;result.innerHTML=html;result.classList.toggle("bad",!!bad);}
-  // "Tengo dudas, ¿conversamos?" → WhatsApp
-  document.getElementById("talkBtn").addEventListener("click",()=>{
-    const x=details();
-    const msg="Hola Gabriel"+(x.nombre?", somos "+x.nombre:"")+". "+(selDate?"Nos casamos el "+nice(selDate)+" en "+x.lugar+" ("+x.tipo.toLowerCase()+", "+x.inv.toLowerCase()+" invitados). ":"")+
+  $("askGo").addEventListener("click",()=>{window.open("https://wa.me/"+WA+"?text="+encodeURIComponent($("askMsg").textContent),"_blank","noopener");});
+  $("askDate").addEventListener("click",()=>{closeAsk();go(0,false);$("agenda").scrollIntoView();});
+
+  // WhatsApp: "Tengo dudas, ¿conversamos?"
+  function talk(){
+    const nm=$("nombre").value.trim(), tipo=document.querySelector('input[name="tipo"]:checked').value;
+    const msg="Hola Gabriel"+(nm?", somos "+nm:"")+". "+(selDate?"Nos casamos el "+nice(selDate)+" en "+lugar()+" ("+tipo.toLowerCase()+", "+$("inv").value.toLowerCase()+" invitados). ":"")+
       "Nos interesa "+NAMES[pack()]+" ("+fmt(PRICES[pack()])+") y tenemos algunas dudas, ¿podemos conversar?";
     window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(msg),"_blank","noopener");
-  });
+  }
+  $("talkBtn").addEventListener("click",talk);
+  $("sideTalk").addEventListener("click",talk);
+
   // "Quiero reservar ya" → pago del abono con Flow
-  document.getElementById("bookForm").addEventListener("submit",async e=>{
+  $("bookForm").addEventListener("submit",async e=>{
     e.preventDefault();
-    if(!selDate) return;
-    const x=details(), email=document.getElementById("email").value.trim();
-    if(!x.nombre){show("Escriban sus nombres para reservar.",1);document.getElementById("nombre").focus();return;}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){show("Escriban un correo válido para enviarles el comprobante.",1);document.getElementById("email").focus();return;}
+    if(step!==3){ go(step+1); return; }
+    if(!selDate){go(0);return;}
+    if(!validData()){go(2);return;}
+    const tipo=document.querySelector('input[name="tipo"]:checked').value;
     payBtn.disabled=true; payBtn.textContent="Conectando con Flow…";
     try{
       const r=await fetch("/.netlify/functions/flow-crear",{method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({item:pack(),abono:true,email,nombre:x.nombre,fecha:iso(selDate),
-          detalle:x.tipo+" · "+x.lugar+" · "+x.inv+" invitados · WhatsApp "+x.tel+" · "+x.fuente})});
+        body:JSON.stringify({item:pack(),abono:true,email:$("email").value.trim(),nombre:$("nombre").value.trim(),fecha:iso(selDate),
+          detalle:tipo+" · "+lugar()+" · "+$("inv").value+" invitados · WhatsApp "+$("tel").value.trim()+" · "+$("fuente").value})});
       const data=await r.json();
       if(!r.ok||!data.url) throw new Error(data.error||"No se pudo iniciar el pago.");
       location.href=data.url;
-    }catch(err){
-      show(err.message+" Si sigue fallando, escríbanme por WhatsApp.",1);
-      payBtn.disabled=false; payBtn.textContent="Quiero reservar ya";
+    }catch(x){
+      result.hidden=false; result.textContent=x.message+" Si sigue fallando, escríbanme por WhatsApp.";
+      payBtn.disabled=false; update();
     }
   });
-  render(); update();
+
+  // Abrir en el primer mes con fechas libres
+  while(mi<months.length-1&&freeIn(...months[mi])===0) mi++;
+  render(); go(0,false);
 })();
-</script>
-<script>
-(()=>{const sec=document.getElementById("agenda"),bs=sec.querySelectorAll(".styletog button");
- function set(v){sec.classList.toggle("vx",v==="vx");bs.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.st===v)));try{localStorage.setItem("agst",v)}catch(e){}}
- let v="vx";try{const x=localStorage.getItem("agst");if(x!==null)v=x}catch(e){}
- set(v);bs.forEach(b=>b.addEventListener("click",()=>set(b.dataset.st)));})();
 </script>
 <script>
 (()=>{const h=document.documentElement,ag=document.getElementById("agenda"),bs=document.querySelectorAll("#siteTog button"),nm=document.getElementById("siteName");
